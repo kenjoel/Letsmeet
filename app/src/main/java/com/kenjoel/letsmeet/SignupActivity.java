@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,6 +44,10 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             intent.putExtra( "email", email);
             intent.putExtra("pass", pass);
             intent.putExtra("confirm", confirm);
+
+            startActivity(intent);
+
+            Toast.makeText(SignupActivity.this, name, Toast.LENGTH_LONG).show();
 
 
         }
