@@ -25,6 +25,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
         ButterKnife.bind(this);
+        mLauncher.setOnClickListener(this);
     }
 
     @Override
@@ -32,6 +33,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         if(v == mLauncher){
             Intent intent = new Intent(SignupActivity.this, ProfileActivity.class );
+            intent.putExtra("name", mName);
+//            intent.putExtra("email", mEmail);
+
 
         }
 
