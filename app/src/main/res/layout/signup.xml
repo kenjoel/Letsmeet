@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/josh">
+    android:background="@drawable/austin">
 
     <TextView
         android:id="@+id/textView"
@@ -24,16 +24,23 @@
 
     <EditText
         android:id="@+id/editTextTextPersonName"
+        style="@android:style/Widget.DeviceDefault.Light.AutoCompleteTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
+        android:backgroundTint="@android:color/background_light"
+        android:cursorVisible="true"
         android:ems="10"
+        android:foregroundTint="@android:color/background_light"
         android:hint="Username"
         android:inputType="textPersonName"
+        android:text="Username"
+        android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.218"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:visibility="visible" />
 
     <EditText
         android:id="@+id/editTextTextEmailAddress"
@@ -41,9 +48,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
+        android:backgroundTint="@android:color/background_light"
         android:ems="10"
         android:hint="Email"
         android:inputType="textEmailAddress"
+        android:text="Email"
+        android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
@@ -52,35 +62,46 @@
         android:id="@+id/editTextPhone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@android:color/background_light"
         android:ems="10"
         android:hint="Phone "
         android:inputType="phone"
+        android:text="Phone "
+        android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextEmailAddress"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
-        android:layout_width="0dp"
+        android:layout_width="395dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@android:color/background_light"
         android:ems="10"
         android:hint="Enter Password"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editTextPhone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Enter Password"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
     <EditText
         android:id="@+id/editTextTextPassword2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:backgroundTint="@android:color/background_light"
         android:ems="10"
         android:hint="Confirm Password"
         android:inputType="textPassword"
+        android:text="Confirm Password"
+        android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
 
@@ -88,9 +109,10 @@
         android:id="@+id/button4"
         android:layout_width="227dp"
         android:layout_height="48dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:backgroundTint="@android:color/background_dark"
         android:fontFamily="@font/alfa_slab_one"
         android:text="Launch"
+        android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.369"
