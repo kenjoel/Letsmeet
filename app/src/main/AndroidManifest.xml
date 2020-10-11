@@ -12,16 +12,27 @@
         <activity
             android:name=".MainActivity"
             android:label="MainActivity"
+<<<<<<< HEAD
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+=======
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+>>>>>>> 07f3ef2b5e715fcbbecaf2cc14bb564f90759a12
         </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+<<<<<<< HEAD
         <activity android:name=".SignupActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -34,6 +45,8 @@
             </intent-filter>
         </activity>
 
+=======
+>>>>>>> 07f3ef2b5e715fcbbecaf2cc14bb564f90759a12
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.kenjoel.letsmeet;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,3 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+=======
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+}
+>>>>>>> 07f3ef2b5e715fcbbecaf2cc14bb564f90759a12

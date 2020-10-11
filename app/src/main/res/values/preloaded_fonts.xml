@@ -2,9 +2,13 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/aldrich</item>
+<<<<<<< HEAD
         <item>@font/alfa_slab_one</item>
         <item>@font/anonymous_pro_bold</item>
         <item>@font/arbutus</item>
+=======
+        <item>@font/anonymous_pro_bold</item>
+>>>>>>> 07f3ef2b5e715fcbbecaf2cc14bb564f90759a12
         <item>@font/caveat_brush</item>
     </array>
 </resources>
