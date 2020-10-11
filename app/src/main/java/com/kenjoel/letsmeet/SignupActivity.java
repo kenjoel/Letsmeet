@@ -2,8 +2,10 @@ package com.kenjoel.letsmeet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +16,10 @@ import butterknife.ButterKnife;
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
 
     @BindView(R.id.launch) Button mLauncher;
-    @BindView(R.id.name) TextView mName;
-    @BindView(R.id.email) TextView mEmail;
-    @BindView(R.id.phone) TextView mPhone;
-    @BindView(R.id.password) TextView mPassword;
-    @BindView(R.id.confirm) TextView mConfirm;
+    @BindView(R.id.name) EditText mName;
+    @BindView(R.id.email) EditText mEmail;
+    @BindView(R.id.password) EditText mPassword;
+    @BindView(R.id.confirm) EditText mConfirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +34,15 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         if(v == mLauncher){
             Intent intent = new Intent(SignupActivity.this, ProfileActivity.class );
-            intent.putExtra("name", mName);
-//            intent.putExtra("email", mEmail);
+            String name = mName.getText().toString();
+            String email = mEmail.getText().toString();
+            String pass = mPassword.getText().toString();
+            String confirm = mConfirm.getText().toString();
+
+            intent.putExtra("name",  name);
+            intent.putExtra( "email", email);
+            intent.putExtra("pass", pass);
+            intent.putExtra("confirm", confirm);
 
 
         }
