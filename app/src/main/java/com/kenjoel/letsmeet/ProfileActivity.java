@@ -3,6 +3,7 @@ package com.kenjoel.letsmeet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,6 +35,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         ProfileAdapter profileAdapter = new ProfileAdapter(this, android.R.layout.simple_list_item_1, mName, mEmail);
         mListview.setAdapter(profileAdapter);
+        Toast.makeText(ProfileActivity.this,  name + " Welcome your account was created successfully ", Toast.LENGTH_LONG).show();
+
+
     }
 
 

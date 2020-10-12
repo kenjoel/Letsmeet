@@ -45,7 +45,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             intent.putExtra("pass", pass);
             intent.putExtra("confirm", confirm);
             startActivity(intent);
-            Toast.makeText(SignupActivity.this, "Welcome" + name, Toast.LENGTH_LONG).show();
+            Toast.makeText(SignupActivity.this, "Welcome " + name, Toast.LENGTH_LONG).show();
 
 
         }
