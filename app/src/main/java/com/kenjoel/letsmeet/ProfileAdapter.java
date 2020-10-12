@@ -8,22 +8,25 @@ import java.util.List;
 public class ProfileAdapter extends ArrayAdapter {
 
     private Context mContext;
-    private List<String> mDetails;
+    private String[] mName;
+    private String[] mEmail;
 
-    public ProfileAdapter(Context mcontext, int resource, List<String> mdetails){
+    public ProfileAdapter(Context mcontext, int resource, String[] mName, String[] mEmail){
         super(mcontext, resource);
         this.mContext = mcontext;
-        this.mDetails = mdetails;
+        this.mName = mName;
+        this.mEmail = mEmail;
     }
 
     @Override
     public Object getItem(int position){
-        String mdetails = mDetails.get(position);
-        return mdetails;
+        String mdetails = mName[position];
+        String email = mEmail[position];
+        return String.format("%s Welcome to Connect, check you email %s to activate account", mdetails, email);
     }
 
     @Override
     public int getCount(){
-        return mDetails.size();
+        return mName.length;
     }
 }

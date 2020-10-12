@@ -34,19 +34,17 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v){
 
         if(v == mLauncher){
-            Intent intent = new Intent(SignupActivity.this, ProfileActivity.class );
             String name = mName.getText().toString();
             String email = mEmail.getText().toString();
             String pass = mPassword.getText().toString();
             String confirm = mConfirm.getText().toString();
 
+            Intent intent = new Intent(SignupActivity.this, ProfileActivity.class );
             intent.putExtra("name",  name);
             intent.putExtra( "email", email);
             intent.putExtra("pass", pass);
             intent.putExtra("confirm", confirm);
-
             startActivity(intent);
-
             Toast.makeText(SignupActivity.this, "Welcome" + name, Toast.LENGTH_LONG).show();
 
 

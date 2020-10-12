@@ -26,29 +26,28 @@
         android:id="@+id/launch"
         android:layout_width="227dp"
         android:layout_height="48dp"
-        android:layout_marginTop="69dp"
-        android:layout_marginBottom="144dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@android:color/background_dark"
         android:fontFamily="@font/alfa_slab_one"
         android:text="Launch"
         android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.26"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirm" />
+        app:layout_constraintTop_toBottomOf="@+id/confirm"
+        app:layout_constraintVertical_bias="0.011" />
 
     <EditText
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="44dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Username"
         android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 

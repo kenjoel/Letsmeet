@@ -10,10 +10,12 @@
         android:id="@+id/imageView3"
         android:layout_width="234dp"
         android:layout_height="131dp"
-        android:layout_marginTop="172dp"
-        android:layout_marginEnd="104dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="108dp"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/arrow_down_float"
         tools:srcCompat="@tools:sample/avatars" />
 
     <ImageButton
@@ -27,16 +29,20 @@
         app:srcCompat="@drawable/see" />
 
     <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/thisList"
+        android:layout_width="325dp"
+        android:layout_height="63dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="158dp"
+        android:background="@android:color/background_light"
+        android:backgroundTint="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButton2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView4"
@@ -107,7 +113,7 @@
         android:backgroundTint="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listView"
+        app:layout_constraintTop_toBottomOf="@+id/thisList"
         app:layout_constraintVertical_bias="0.886"
         app:srcCompat="@drawable/friends" />
 
