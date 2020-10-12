@@ -22,7 +22,7 @@ public class ProfileAdapter extends ArrayAdapter {
     public Object getItem(int position){
         String mdetails = mName[position];
         String email = mEmail[position];
-        return String.format("%s Welcome to Connect, check you email %s to activate account", mdetails, email);
+        return String.format("%s Welcome to Connect, check your email %s to activate account", mdetails, email);
     }
 
     @Override
