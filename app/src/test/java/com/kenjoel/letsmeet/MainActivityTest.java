@@ -31,12 +31,13 @@ public class MainActivityTest {
         assertTrue("Connect".equals(connect.getText().toString()));
     }
 
-//    @Test
-//    public void secondActivityStarted(){
-//        activity.findViewById(R.id.creation).performClick();
-//        Intent expectedIntent = new Intent(activity, SignupActivity.class);
-//        ShadowActivity shadowActivity = org.robolectric.Shadows.shadowOf(activity);
-//        Intent actualIntent = shadowActivity.getNextStartedActivity();
-//        assertTrue(actualIntent.filterEquals(expectedIntent));
-//    }
+    @Config(manifest=Config.NONE)
+    @Test
+    public void secondActivityStarted(){
+        activity.findViewById(R.id.creation).performClick();
+        Intent expectedIntent = new Intent(activity, SignupActivity.class);
+        ShadowActivity shadowActivity = org.robolectric.Shadows.shadowOf(activity);
+        Intent actualIntent = shadowActivity.getNextStartedActivity();
+        assertTrue(actualIntent.filterEquals(expectedIntent));
+    }
 }

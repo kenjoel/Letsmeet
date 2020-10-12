@@ -16,11 +16,10 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-public class MainActivityInstrumentalTest {
 
-    @RunWith(AndroidJUnit4.class)
-    @LargeTest
-    public class MainActivityInstrumentationTest {
+@RunWith(AndroidJUnit4.class)
+@LargeTest
+public class MainActivityInstrumentedTest {
 
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule =
@@ -46,6 +45,4 @@ public class MainActivityInstrumentalTest {
         onView(withId(R.id.thisList)).check(matches
                 (withText(name +" Welcome to Connect, check you email email to activate account ")));
     }
-
-}
 }
