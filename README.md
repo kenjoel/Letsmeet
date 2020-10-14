@@ -3,7 +3,7 @@ This is a mobile application that links individuals within the same geolocation 
 * Install Android Studio 2.2.*
 * Install Eclipse, Maven and Java
 * Robolectric and Espresso dependancies for tests
-* ButterKnife for Viewa
+* ButterKnife for Views
 
 * [App Overview]
   - [App Steps]
