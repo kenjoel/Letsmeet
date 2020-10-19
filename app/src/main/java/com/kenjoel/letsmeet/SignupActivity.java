@@ -61,23 +61,17 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v){
 
         if(v == mLauncher){
-            String name = mName.getText().toString();
             String email = mEmail.getText().toString();
             String pass = mPassword.getText().toString();
-            String confirm = mConfirm.getText().toString();
 
-            if(pass == confirm){
-                mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!task.isSuccessful()){
-                            Toast.makeText(SignupActivity.this, "SignUp error ", Toast.LENGTH_SHORT).show();
-                        }
+            mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(!task.isSuccessful()){
+                        Toast.makeText(SignupActivity.this, "SignUp error ", Toast.LENGTH_SHORT).show();
                     }
-                });
-            }else{
-                Toast.makeText(SignupActivity.this, "Hey, Your passwords don't match ", Toast.LENGTH_LONG).show();
-            }
+                }
+            });
 //            Intent intent = new Intent(SignupActivity.this, ProfileActivity.class );
 //            intent.putExtra("name",  name);
 //            intent.putExtra( "email", email);
