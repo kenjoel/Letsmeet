@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.creation) Button mCreateAccountButton;
+    @BindView(R.id.login) Button mLoginButtton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +29,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(v == mCreateAccountButton){
             Intent intent = new Intent(MainActivity.this, SignupActivity.class);
             startActivity(intent);
+            Toast.makeText( MainActivity.this,"fill in your details", Toast.LENGTH_LONG).show();
+        }else if(v == mLoginButtton){
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
-        Toast.makeText( MainActivity.this,"fill in your details", Toast.LENGTH_LONG).show();
     }
 
 

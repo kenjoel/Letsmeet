@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "996241940288",
+    "firebase_url": "https://tinder-f239a.firebaseio.com",
+    "project_id": "tinder-f239a",
+    "storage_bucket": "tinder-f239a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996241940288:android:9f1dd26c117a6a637de4a5",
+        "android_client_info": {
+          "package_name": "com.kenjoel.letsmeet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996241940288-h7iu5ve0mn5ispg8q5n5o00elfu23pu3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kenjoel.letsmeet",
+            "certificate_hash": "f999f9afdfdaa820ad348d0e558be7db38ed9baa"
+          }
+        },
+        {
+          "client_id": "996241940288-61vh95jnjvlc5t99g7gbbh6g6bimjc6c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCChMoADQYePwUMwf4riuGfnxGKVMHhV3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "996241940288-61vh95jnjvlc5t99g7gbbh6g6bimjc6c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
