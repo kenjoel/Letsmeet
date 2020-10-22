@@ -1,9 +1,8 @@
 # Connect
 
-## BY
-### CONTRIBUTORS
+### BY
 
-**Ken Joel Muigai
+**Ken Joel Muigai**
 
 ## DESCRIPTION
 
