@@ -3,11 +3,11 @@
 ## BY
 ### CONTRIBUTORS
 
-* Ken Joel Muigai
+**Ken Joel Muigai
 
 ## DESCRIPTION
 
-* The connect app is a social media interaction application where users to view uploads from other users, follow and like and send direct messages to them. Connect optimizes handson technology to give users realtime experience of elegance and diversity.
+* The connect app is a social media interaction application where users are able to view image uploads from other users, follow and like and send direct messages to them. Connect optimizes handson technology to give users realtime experience of elegance and diversity.
 
 ## SETUP/INSTALLATION REQUIREMENTS
 
