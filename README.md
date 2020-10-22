@@ -36,6 +36,10 @@
 * Gson
 * Retrofit
 
+
+## Demo
+![](app/sampledata/sacrifice.png) ![](app/sampledata/suffice.png) ![](app/sampledata/seek.png)
+
 ## BUGS
 
 * Not yet Noticed. If you do come accross any, feel free to contact me as indicated below.
