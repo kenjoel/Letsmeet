@@ -12,7 +12,7 @@
 ## SETUP/INSTALLATION REQUIREMENTS
 
 * Download and install Android SDK
-* Have atleast java 9 installed from (#https://openjdk.java.net/install/)
+* Have atleast java 9 installed from https://openjdk.java.net/install/
 * Espresso and Robolectric dependancies to run tests
 * Firebase 
 * Clone or download this repository (link in the section below) to your local machine and run in ur code editor.
