@@ -39,58 +39,63 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         ButterKnife.bind(this);
         mLauncher.setOnClickListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
-        firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//        mAuth = FirebaseAuth.getInstance();
+//        firebaseAuthStateListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//
+//                final FirebaseUser user = mAuth.getInstance().getCurrentUser();
+//
+//                if(user != null){
+//                    Intent intent = new Intent(SignupActivity.this, ProfileActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                    return;
+//                }
 
-                final FirebaseUser user = mAuth.getInstance().getCurrentUser();
 
-                if(user != null){
-                    Intent intent = new Intent(SignupActivity.this, ProfileActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return;
-                }
-
-            }
-        };
     }
 
     @Override
     public void onClick(View v){
+        String name = mName.getText().toString();
+        String email = mEmail.getText().toString();
+        String pass = mPassword.getText().toString();
+        String confirm = mConfirm.getText().toString();
+
 
         if(v == mLauncher){
-            String email = mEmail.getText().toString();
-            String pass = mPassword.getText().toString();
+            Intent intent = new Intent(SignupActivity.this, ProfileActivity.class );
+            intent.putExtra("name",  name);
+            intent.putExtra( "email", email);
+            intent.putExtra("pass", pass);
+            intent.putExtra("confirm", confirm);
+            startActivity(intent);
 
-            mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(!task.isSuccessful()){
-                        Toast.makeText(SignupActivity.this, "SignUp error ", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-//            Intent intent = new Intent(SignupActivity.this, ProfileActivity.class );
-//            intent.putExtra("name",  name);
-//            intent.putExtra( "email", email);
-//            intent.putExtra("pass", pass);
-//            intent.putExtra("confirm", confirm);
-//            startActivity(intent);
-
+//            String email = mEmail.getText().toString();
+//            String pass = mPassword.getText().toString();
+//
+//            mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+//                @Override
+//                public void onComplete(@NonNull Task<AuthResult> task) {
+//                    if(!task.isSuccessful()){
+//                        Toast.makeText(SignupActivity.this, "SignUp error ", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
+////
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(firebaseAuthStateListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mAuth.removeAuthStateListener(firebaseAuthStateListener);
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        mAuth.addAuthStateListener(firebaseAuthStateListener);
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        mAuth.removeAuthStateListener(firebaseAuthStateListener);
+//    }
 }

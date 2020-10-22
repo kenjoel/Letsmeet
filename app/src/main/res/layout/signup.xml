@@ -5,7 +5,7 @@
     style="@style/Theme.AppCompat.DayNight.Dialog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/austin">
+    android:background="@drawable/sign">
 
     <TextView
         android:id="@+id/textView"
@@ -44,8 +44,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:background="@android:drawable/editbox_background"
-        android:backgroundTint="@color/cardview_light_background"
         android:ems="10"
         android:foregroundTint="@color/cardview_light_background"
         android:hint="Username"
@@ -64,7 +62,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:background="@android:drawable/editbox_background_normal"
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"
@@ -79,7 +76,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:background="@android:drawable/editbox_background"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPersonName"
@@ -94,7 +90,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:background="@android:drawable/editbox_background"
         android:ems="10"
         android:hint="confirm password"
         android:inputType="textPersonName"
