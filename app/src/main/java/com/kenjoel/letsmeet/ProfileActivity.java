@@ -4,10 +4,16 @@ package com.kenjoel.letsmeet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -16,10 +22,8 @@ import butterknife.ButterKnife;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private String[] mName;
-    private String[] mEmail;
 
-    @BindView(R.id.thisList) ListView mListview;
+    @BindView(R.id.bottom_navigation) BottomNavigationView navigationView;
 
 
     @Override
@@ -27,20 +31,44 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
         ButterKnife.bind(this);
-
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
-        String email = intent.getStringExtra("email");
-
-        this.mName = new String[]{name};
-        this.mEmail = new String[]{email};
-
-        ProfileAdapter profileAdapter = new ProfileAdapter(this, android.R.layout.simple_list_item_1, mName, mEmail);
-        mListview.setAdapter(profileAdapter);
-        Toast.makeText(ProfileActivity.this,  name + " Welcome your account was created successfully ", Toast.LENGTH_LONG).show();
-
-
+        navigationView.setOnNavigationItemSelectedListener(navListener);
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameholder, new profile_fragment()).commit();
     }
+
+    BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment selectedFragment = null;
+
+            switch (item.getItemId()){
+                case R.id.profile:
+                    selectedFragment = new profile_fragment();
+                    break;
+
+//                case R.id.feed:
+//                    selectedFragment = new feed_fragment();
+//                    break;
+//
+//                case R.id.friends:
+//                    selectedFragment = new friends_fragment();
+//                    break;
+//
+//                case R.id.settings:
+//                    selectedFragment = new settings_fragment();
+//                    break;
+//
+//                case R.id.messages:
+//                    selectedFragment = new message_fragment();
+//                    break;
+            }
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.frameholder, selectedFragment).commit();
+
+            return true;
+        }
+
+
+    };
 
 
 
