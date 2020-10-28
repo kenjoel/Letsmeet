@@ -1,5 +1,6 @@
 package com.kenjoel.letsmeet;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,11 +10,13 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -54,11 +57,16 @@ public class FeedActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    private static String userSex;
+    private String oppositeSex;
+
+
 
     List items;
     List<cards>rowItems;
 
-
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,8 +151,38 @@ public class FeedActivity extends AppCompatActivity {
         });
     }
 
-    private String userSex;
-    private String oppositeSex;
+    BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.profile:
+                    Intent intent = new Intent(FeedActivity.this, ProfileActivity.class);
+                    intent.putExtra("userSex", userSex);
+                    startActivity(intent);
+                    finish();
+                    break;
+//                case R.id.friends:
+//                    selectedFragment = new friends_fragment();
+//                    break;
+//
+                case R.id.settings:
+                    Intent sintent = new Intent(FeedActivity.this, SettingsActivity.class);
+                    sintent.putExtra("userSex", userSex);
+                    startActivity(sintent);
+                    finish();
+                    break;
+
+//                case R.id.messages:
+//                    selectedFragment = new message_fragment();
+//                    break;
+            }
+
+            return true;
+        }
+
+
+    };
+
 
     private void getGender() {
         final FirebaseUser userId = FirebaseAuth.getInstance().getCurrentUser();
@@ -249,6 +287,12 @@ public class FeedActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    public  void navigateTo(){
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        intent.putExtra("userSex", userSex);
+        startActivity(intent);
     }
 
 }

@@ -4,6 +4,7 @@ package com.kenjoel.letsmeet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +26,9 @@ import butterknife.ButterKnife;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    private static final String TAG = "Users Sex is";
+    private String userSex;
+
 
     @BindView(R.id.bottom_navigation) BottomNavigationView navigationView;
 
@@ -35,19 +39,15 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.profile_activity);
         ButterKnife.bind(this);
         navigationView.setOnNavigationItemSelectedListener(navListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameholder, new profile_fragment()).commit();
+//        userSex = getIntent().getStringExtra("userSex");
+//        Log.i(TAG, userSex);
+
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment selectedFragment = new profile_fragment();
-
             switch (item.getItemId()){
-                case R.id.profile:
-                    selectedFragment = new profile_fragment();
-                    break;
-
                 case R.id.feed:
                     Intent intent = new Intent(ProfileActivity.this, FeedActivity.class);
                     startActivity(intent);
@@ -57,16 +57,17 @@ public class ProfileActivity extends AppCompatActivity {
 //                    selectedFragment = new friends_fragment();
 //                    break;
 //
-//                case R.id.settings:
-//                    selectedFragment = new settings_fragment();
-//                    break;
-//
+                case R.id.settings:
+                    Intent sintent = new Intent(ProfileActivity.this, SettingsActivity.class);
+                    sintent.putExtra("userSex", userSex);
+                    startActivity(sintent);
+                    finish();
+                    break;
+
 //                case R.id.messages:
 //                    selectedFragment = new message_fragment();
 //                    break;
             }
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.frameholder, selectedFragment).commit();
 
             return true;
         }
