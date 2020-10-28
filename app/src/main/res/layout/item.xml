@@ -22,11 +22,12 @@
             android:layout_height="180dp">
 
             <ImageView
+                android:id="@+id/imageViewCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
             <TextView
-                android:id="@+id/helloText"
+                android:id="@+id/name"
                 android:layout_width="191dp"
                 android:layout_height="164dp"
                 android:layout_marginLeft="20dp"

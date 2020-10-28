@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ import android.widget.Toast;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,9 +46,17 @@ import butterknife.OnClick;
 public class FeedActivity extends AppCompatActivity {
 
     private static final String TAG = "the Key" ;
-    private ArrayList<String> al;
-    private ArrayAdapter<String> arrayAdapter;
+    private CardsAdapter arrayAdapter;
     private int i;
+
+    private String currentUserId;
+    private DatabaseReference Users;
+
+    private FirebaseAuth mAuth;
+
+
+    List items;
+    List<cards>rowItems;
 
 
     @Override
@@ -56,8 +66,13 @@ public class FeedActivity extends AppCompatActivity {
         getGender();
 
 
-        al = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al);
+        Users = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUserId = mAuth.getUid();
+
+        rowItems = new ArrayList<>();
+        arrayAdapter = new CardsAdapter(this, R.layout.item, rowItems);
 
         SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) findViewById(R.id.frame);
 
@@ -68,21 +83,25 @@ public class FeedActivity extends AppCompatActivity {
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                al.remove(0);
+                rowItems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                //Do something on the left!
-                //You also have access to the original object.
-                //If you want to use it just cast it (String) dataObject
+                cards obj = (cards) dataObject;
+                String userId = obj.getUserId();
+                Users.child(oppositeSex).child(userId).child("connections").child("Nada").child(currentUserId).setValue(true);
                 Toast.makeText(FeedActivity.this, "Nope", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
+                cards obj = (cards) dataObject;
+                String userId = obj.getUserId();
+                Users.child(oppositeSex).child(userId).child("connections").child("Yes").child(currentUserId).setValue(true);
                 Toast.makeText(FeedActivity.this, "Yeah", Toast.LENGTH_SHORT).show();
+                matchMet(userId);
             }
 
             @Override
@@ -100,10 +119,28 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
                 Toast.makeText(FeedActivity.this, "clicked", Toast.LENGTH_SHORT).show();
-
             }
         });
 
+    }
+
+    private void matchMet(String userId) {
+        DatabaseReference currentuser = Users.child(userSex).child(currentUserId).child("connections").child("Yes").child(userId);
+        currentuser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    Toast.makeText(FeedActivity.this, "User Saved", Toast.LENGTH_LONG).show();
+                    Users.child(oppositeSex).child(snapshot.getKey()).child("connections").child("saved").child(currentUserId).setValue(true);
+                    Users.child(userSex).child(currentUserId).child("connections").child("saved").child(snapshot.getKey()).setValue(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private String userSex;
@@ -184,8 +221,9 @@ public class FeedActivity extends AppCompatActivity {
         opposite.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if(snapshot.exists()){
-                    al.add(snapshot.child("name").getValue().toString());
+                if(snapshot.exists() && !snapshot.child("connections").child("Nada").hasChild(currentUserId) &&  !snapshot.child("connections").child("Yes").hasChild(currentUserId) ){
+                    cards cards = new cards(snapshot.child("name").getValue().toString(), snapshot.getKey());
+                    rowItems.add(cards);
                     arrayAdapter.notifyDataSetChanged();
                 }
 
@@ -193,7 +231,6 @@ public class FeedActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
             }
 
             @Override
