@@ -3,10 +3,13 @@ package com.kenjoel.letsmeet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,20 +21,26 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener{
 
+    private static final String TAG =  "here is the value";
     @BindView(R.id.launch) Button mLauncher;
     @BindView(R.id.name) EditText mName;
     @BindView(R.id.email) EditText mEmail;
     @BindView(R.id.password) EditText mPassword;
     @BindView(R.id.confirm) EditText mConfirm;
+    @BindView(R.id.radioGroup) RadioGroup mRadioGroup;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
+
+    private RadioButton idHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +63,22 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     return;
                 }
 
-
             }
         };
     }
 
             @Override
             public void onClick(View v) {
-                String name = mName.getText().toString().trim();
+
+                int selected = mRadioGroup.getCheckedRadioButtonId();
+                idHolder =  findViewById(selected);
+                Log.d(TAG, idHolder.toString());
+
+                if(idHolder.getText() == null){
+                    return;
+                }
+
+                final String name = mName.getText().toString().trim();
                 String email = mEmail.getText().toString().trim();
                 String pass = mPassword.getText().toString().trim();
                 String confirm = mConfirm.getText().toString().trim();
@@ -77,6 +94,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             Toast.makeText(SignupActivity.this, "SignUp error ", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(SignupActivity.this, "Welcome Sign Up Success", Toast.LENGTH_LONG).show();
+                            String userId = mAuth.getCurrentUser().getUid();
+                            DatabaseReference UserReference = FirebaseDatabase.getInstance().getReference().child("Users").child(idHolder.getText().toString()).child(userId).child("name");
+                            UserReference.setValue(name);
                         }
                     }
                 });
