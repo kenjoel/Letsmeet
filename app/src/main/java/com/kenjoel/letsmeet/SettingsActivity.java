@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -61,15 +62,20 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.profilephone) EditText mPhone;
     @BindView(R.id.confirmBtn) Button mConfirmBtn;
     @BindView(R.id.backbtn) Button backBtn;
-
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView navigationView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        ButterKnife.bind(this);
 
         userSex = getIntent().getStringExtra("userSex");
+
+        navigationView.setOnNavigationItemSelectedListener(navListener);
+
 
         nameProfile = getNameProfile;
         phoneProfile = mPhone;
@@ -118,11 +124,20 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                     if(map.get("phone") != null){
                         phone = map.get("phone").toString();
-                        nameProfile.setText(phone);
+                        phoneProfile.setText(phone);
                     }
 
+                    Glide.clear(profileImage);
                     if(map.get("profileImageUrl") != null){
                         profileImageUrl = map.get("profileImageUrl").toString();
+
+                        switch (profileImageUrl){
+                            case "default":
+                                Glide.with(getApplication()).load(R.drawable.avtr).into(imageView);
+                                break;
+                            default:
+                                Glide.with(getApplication()).load(profileImageUrl).into(imageView);
+                        }
                         Glide.with(getApplication()).load(profileImageUrl).into(profileImage);
                     }
                 }
@@ -139,7 +154,6 @@ public class SettingsActivity extends AppCompatActivity {
     BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment selectedFragment = null;
             switch (item.getItemId()){
                 case R.id.profile:
                     Intent intent = new Intent(SettingsActivity.this, ProfileActivity.class);
@@ -152,10 +166,12 @@ public class SettingsActivity extends AppCompatActivity {
 //                case R.id.messages:
 //                    selectedFragment = new message_fragment();
 //                    break;
+                case R.id.feed:
+                    Intent intent1 = new Intent(SettingsActivity.this, FeedActivity.class);
+                    startActivity(intent1);
+                    finish();
+                    break;
             }
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.frameholder, selectedFragment).commit();
-
             return true;
         }
 

@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FeedActivity extends AppCompatActivity {
@@ -71,6 +72,9 @@ public class FeedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
+        ButterKnife.bind(this);
+        navigationView.setOnNavigationItemSelectedListener(navListener);
+
         getGender();
 
 
@@ -150,6 +154,7 @@ public class FeedActivity extends AppCompatActivity {
             }
         });
     }
+
 
     BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -260,7 +265,12 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 if(snapshot.exists() && !snapshot.child("connections").child("Nada").hasChild(currentUserId) &&  !snapshot.child("connections").child("Yes").hasChild(currentUserId) ){
-                    cards cards = new cards(snapshot.child("name").getValue().toString(), snapshot.getKey());
+                    String profileImageUrl = "default";
+
+                    if(!snapshot.child("profileImageUrl").getValue().equals("default")){
+                        profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
+                    }
+                    cards cards = new cards(snapshot.child("name").getValue().toString(), snapshot.getKey(), profileImageUrl);
                     rowItems.add(cards);
                     arrayAdapter.notifyDataSetChanged();
                 }
@@ -287,12 +297,6 @@ public class FeedActivity extends AppCompatActivity {
             }
 
         });
-    }
-
-    public  void navigateTo(){
-        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-        intent.putExtra("userSex", userSex);
-        startActivity(intent);
     }
 
 }

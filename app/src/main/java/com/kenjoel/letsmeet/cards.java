@@ -3,10 +3,12 @@ package com.kenjoel.letsmeet;
 public class cards {
     private String name;
     private String userId;
+    private String profileImageUrl;
 
-    public cards(String name, String userId) {
+    public cards(String name, String userId, String imageUrl) {
         this.name = name;
         this.userId = userId;
+        this.profileImageUrl = imageUrl;
     }
 
     public void setName(String name) {
@@ -23,5 +25,13 @@ public class cards {
 
     public String getUserId() {
         return userId;
+    }
+
+    public String getImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.profileImageUrl = imageUrl;
     }
 }

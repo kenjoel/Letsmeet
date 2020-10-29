@@ -24,6 +24,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -95,8 +98,12 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         }else{
                             Toast.makeText(SignupActivity.this, "Welcome Sign Up Success", Toast.LENGTH_LONG).show();
                             String userId = mAuth.getCurrentUser().getUid();
-                            DatabaseReference UserReference = FirebaseDatabase.getInstance().getReference().child("Users").child(idHolder.getText().toString()).child(userId).child("name");
-                            UserReference.setValue(name);
+                            DatabaseReference UserReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+                            Map userInfo = new HashMap();
+                            userInfo.put("name", name);
+                            userInfo.put("gender", idHolder.getText().toString());
+                            userInfo.put("profileImageUrl", "default");
+                            UserReference.setValue(userInfo);
                         }
                     }
                 });
