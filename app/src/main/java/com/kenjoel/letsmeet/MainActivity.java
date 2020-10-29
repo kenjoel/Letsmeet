@@ -8,6 +8,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.kenjoel.letsmeet.authentication.LoginActivity;
+import com.kenjoel.letsmeet.authentication.SignupActivity;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

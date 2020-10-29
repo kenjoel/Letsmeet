@@ -3,6 +3,8 @@ package com.kenjoel.letsmeet;
 import android.content.Intent;
 import android.widget.TextView;
 
+import com.kenjoel.letsmeet.authentication.SignupActivity;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

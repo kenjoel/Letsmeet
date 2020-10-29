@@ -1,25 +1,22 @@
-package com.kenjoel.letsmeet;
+package com.kenjoel.letsmeet.profile;
 
 //Instagram Access Token = IGQVJWR0djLUdyNW9IN2FjMFZAzWEhiUk4xY2V6MU1ZAZATc3WUtDTUtkU0NHU0pYczhjM2pDeUVNNTREZAWloY3lIaWhhNGc0RHJTOWVZALXpIYllqb0tULTU4NGwwYlhDLWIzNTNVR3Y0VjNKWGlTdHF1SAZDZD
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.List;
+import com.kenjoel.letsmeet.R;
+import com.kenjoel.letsmeet.authentication.LoginActivity;
+import com.kenjoel.letsmeet.feed.FeedActivity;
+import com.kenjoel.letsmeet.settings.SettingsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +56,6 @@ public class ProfileActivity extends AppCompatActivity {
 //
                 case R.id.settings:
                     Intent sintent = new Intent(ProfileActivity.this, SettingsActivity.class);
-                    sintent.putExtra("userSex", userSex);
                     startActivity(sintent);
                     finish();
                     break;

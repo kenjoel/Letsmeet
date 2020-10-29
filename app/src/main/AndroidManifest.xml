@@ -18,10 +18,10 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings"/>
-        <activity android:name=".FeedActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".feed.FeedActivity" />
+        <activity android:name=".authentication.LoginActivity" />
         <activity
             android:name=".MainActivity"
             android:label="MainActivity"
@@ -38,10 +38,10 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".SignupActivity"
+            android:name=".authentication.SignupActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".profile.ProfileActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
     </application>
 

@@ -1,4 +1,4 @@
-package com.kenjoel.letsmeet;
+package com.kenjoel.letsmeet.models;
 
 public class cards {
     private String name;

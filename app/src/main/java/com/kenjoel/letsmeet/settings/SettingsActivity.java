@@ -1,4 +1,4 @@
-package com.kenjoel.letsmeet;
+package com.kenjoel.letsmeet.settings;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,13 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -32,6 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.kenjoel.letsmeet.profile.ProfileActivity;
+import com.kenjoel.letsmeet.R;
+import com.kenjoel.letsmeet.feed.FeedActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -72,8 +73,6 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
 
-        userSex = getIntent().getStringExtra("userSex");
-
         navigationView.setOnNavigationItemSelectedListener(navListener);
 
 
@@ -86,7 +85,7 @@ public class SettingsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userSex).child(userId);
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
         getUserInfo();
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +124,10 @@ public class SettingsActivity extends AppCompatActivity {
                     if(map.get("phone") != null){
                         phone = map.get("phone").toString();
                         phoneProfile.setText(phone);
+                    }
+
+                    if(map.get("gender") != null){
+                        userSex = map.get("gender").toString();
                     }
 
                     Glide.clear(profileImage);

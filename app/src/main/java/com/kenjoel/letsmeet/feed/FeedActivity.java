@@ -1,4 +1,4 @@
-package com.kenjoel.letsmeet;
+package com.kenjoel.letsmeet.feed;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,14 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -25,27 +20,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.kenjoel.letsmeet.profile.ProfileActivity;
+import com.kenjoel.letsmeet.R;
+import com.kenjoel.letsmeet.settings.SettingsActivity;
+import com.kenjoel.letsmeet.adapters.CardsAdapter;
+import com.kenjoel.letsmeet.models.cards;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
-import android.os.Bundle;
 
 
-import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
-
-import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class FeedActivity extends AppCompatActivity {
 
@@ -74,11 +62,8 @@ public class FeedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feed);
         ButterKnife.bind(this);
         navigationView.setOnNavigationItemSelectedListener(navListener);
-
-        getGender();
-
-
         Users = FirebaseDatabase.getInstance().getReference().child("Users");
+        getGender();
 
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getUid();
@@ -103,7 +88,7 @@ public class FeedActivity extends AppCompatActivity {
             public void onLeftCardExit(Object dataObject) {
                 cards obj = (cards) dataObject;
                 String userId = obj.getUserId();
-                Users.child(oppositeSex).child(userId).child("connections").child("Nada").child(currentUserId).setValue(true);
+                Users.child(userId).child("connections").child("Nada").child(currentUserId).setValue(true);
                 Toast.makeText(FeedActivity.this, "Nope", Toast.LENGTH_SHORT).show();
             }
 
@@ -111,7 +96,7 @@ public class FeedActivity extends AppCompatActivity {
             public void onRightCardExit(Object dataObject) {
                 cards obj = (cards) dataObject;
                 String userId = obj.getUserId();
-                Users.child(oppositeSex).child(userId).child("connections").child("Yes").child(currentUserId).setValue(true);
+                Users.child(userId).child("connections").child("Yes").child(currentUserId).setValue(true);
                 Toast.makeText(FeedActivity.this, "Yeah", Toast.LENGTH_SHORT).show();
                 matchMet(userId);
             }
@@ -137,14 +122,14 @@ public class FeedActivity extends AppCompatActivity {
     }
 
     private void matchMet(String userId) {
-        DatabaseReference currentuser = Users.child(userSex).child(currentUserId).child("connections").child("Yes").child(userId);
+        DatabaseReference currentuser = Users.child(currentUserId).child("connections").child("Yes").child(userId);
         currentuser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     Toast.makeText(FeedActivity.this, "User Saved", Toast.LENGTH_LONG).show();
-                    Users.child(oppositeSex).child(snapshot.getKey()).child("connections").child("saved").child(currentUserId).setValue(true);
-                    Users.child(userSex).child(currentUserId).child("connections").child("saved").child(snapshot.getKey()).setValue(true);
+                    Users.child(snapshot.getKey()).child("connections").child("saved").child(currentUserId).setValue(true);
+                    Users.child(currentUserId).child("connections").child("saved").child(snapshot.getKey()).setValue(true);
                 }
             }
 
@@ -191,30 +176,24 @@ public class FeedActivity extends AppCompatActivity {
 
     private void getGender() {
         final FirebaseUser userId = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference mMaleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Male");
-        mMaleDb.addChildEventListener(new ChildEventListener() {
+        DatabaseReference mUserDb = Users.child(userId.getUid());
+        mUserDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if (snapshot.getKey().equals(userId.getUid())) {
-                    userSex = "Male";
-                    oppositeSex = "Female";
-                    oppositeGenders();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    if(snapshot.child("gender") != null){
+                        userSex = snapshot.child("gender").getValue().toString();
+                        switch(userSex){
+                            case "Male":
+                                oppositeSex = "Female";
+                                break;
+                            case "Female":
+                                oppositeSex = "Male";
+                                break;
+                        }
+                        oppositeGenders();
+                    }
                 }
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
             }
 
@@ -222,49 +201,14 @@ public class FeedActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
-
-        DatabaseReference mFemaleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("Female");
-        mFemaleDb.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if (snapshot.getKey().equals(userId.getUid())) {
-                    userSex = "Female";
-                    oppositeSex = "Male";
-                    oppositeGenders();
-                }
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-
         });
     }
 
     public void oppositeGenders(){
-        final DatabaseReference opposite = FirebaseDatabase.getInstance().getReference().child("Users").child(oppositeSex);
-        opposite.addChildEventListener(new ChildEventListener() {
+        Users.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if(snapshot.exists() && !snapshot.child("connections").child("Nada").hasChild(currentUserId) &&  !snapshot.child("connections").child("Yes").hasChild(currentUserId) ){
+                if(snapshot.exists() && !snapshot.child("connections").child("Nada").hasChild(currentUserId) &&  !snapshot.child("connections").child("Yes").hasChild(currentUserId) && snapshot.child("gender").getValue().toString().equals(oppositeSex)){
                     String profileImageUrl = "default";
 
                     if(!snapshot.child("profileImageUrl").getValue().equals("default")){
