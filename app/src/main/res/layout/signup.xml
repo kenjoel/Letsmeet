@@ -5,7 +5,7 @@
     style="@style/Theme.AppCompat.DayNight.Dialog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sign">
+    android:background="@mipmap/sign">
 
     <TextView
         android:id="@+id/textView"
@@ -27,13 +27,14 @@
         android:id="@+id/launch"
         android:layout_width="227dp"
         android:layout_height="48dp"
+        android:layout_marginBottom="48dp"
         android:backgroundTint="@android:color/background_dark"
         android:fontFamily="@font/alfa_slab_one"
         android:text="Launch"
         android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.385"
+        app:layout_constraintHorizontal_bias="0.331"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -104,10 +105,10 @@
         android:layout_marginBottom="48dp"
         app:layout_constraintBottom_toTopOf="@+id/launch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.949"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confirm"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.25">
 
         <RadioButton
             android:layout_width="wrap_content"

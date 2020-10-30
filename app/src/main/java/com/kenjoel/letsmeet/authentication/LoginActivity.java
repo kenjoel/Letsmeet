@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +27,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @BindView(R.id.lEmail) EditText lEmail;
     @BindView(R.id.lPassword) EditText lPassword;
     @BindView(R.id.bLogin) Button bLogin;
+    @BindView(R.id.signup)
+    TextView navig;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
@@ -38,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         ButterKnife.bind(this);
 
         bLogin.setOnClickListener(this);
+        navig.setOnClickListener(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -80,6 +84,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                     }
                 });
+        }
+
+        if (v == navig){
+            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 

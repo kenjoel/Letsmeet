@@ -8,16 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.kenjoel.letsmeet.R;
 import com.kenjoel.letsmeet.models.cards;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 
 public class CardsAdapter extends ArrayAdapter {
 
-    private Context context;
 
     public CardsAdapter(Context context, int resource, List<cards>items) {
         super(context, resource, items);
@@ -37,11 +36,10 @@ public class CardsAdapter extends ArrayAdapter {
        name.setText(cardItem.getName());
        switch (cardItem.getImageUrl()){
            case "default":
-               Glide.with(theView.getContext()).load(R.drawable.avtr).into(imageView);
+               Picasso.get().load(R.mipmap.avtr).into(imageView);
                break;
            default:
-               Glide.clear(imageView);
-               Glide.with(theView.getContext()).load(cardItem.getImageUrl()).into(imageView);
+               Picasso.get().load(cardItem.getImageUrl()).into(imageView);
        }
        return theView;
        }

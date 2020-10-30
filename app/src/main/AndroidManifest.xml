@@ -42,6 +42,7 @@
         <activity
             android:name=".profile.ProfileActivity"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+        <activity android:name=".friends.FriendsActivity"/>
     </application>
 
 </manifest>

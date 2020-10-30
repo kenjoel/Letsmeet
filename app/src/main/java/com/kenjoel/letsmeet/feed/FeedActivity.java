@@ -147,17 +147,16 @@ public class FeedActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.profile:
                     Intent intent = new Intent(FeedActivity.this, ProfileActivity.class);
-                    intent.putExtra("userSex", userSex);
                     startActivity(intent);
                     finish();
                     break;
-//                case R.id.friends:
-//                    selectedFragment = new friends_fragment();
-//                    break;
+                case R.id.friends:
+                    Intent fintent = new Intent(FeedActivity.this, SettingsActivity.class);
+                    startActivity(fintent);
+                    break;
 //
                 case R.id.settings:
                     Intent sintent = new Intent(FeedActivity.this, SettingsActivity.class);
-                    sintent.putExtra("userSex", userSex);
                     startActivity(sintent);
                     finish();
                     break;

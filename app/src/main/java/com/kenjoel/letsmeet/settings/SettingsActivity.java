@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,9 +29,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.kenjoel.letsmeet.friends.FriendsActivity;
 import com.kenjoel.letsmeet.profile.ProfileActivity;
 import com.kenjoel.letsmeet.R;
 import com.kenjoel.letsmeet.feed.FeedActivity;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -129,19 +130,16 @@ public class SettingsActivity extends AppCompatActivity {
                     if(map.get("gender") != null){
                         userSex = map.get("gender").toString();
                     }
-
-                    Glide.clear(profileImage);
                     if(map.get("profileImageUrl") != null){
                         profileImageUrl = map.get("profileImageUrl").toString();
 
                         switch (profileImageUrl){
                             case "default":
-                                Glide.with(getApplication()).load(R.drawable.avtr).into(imageView);
+                                Picasso.get().load(R.mipmap.avtr).into(imageView);
                                 break;
                             default:
-                                Glide.with(getApplication()).load(profileImageUrl).into(imageView);
+                                Picasso.get().load(profileImageUrl).into(imageView);
                         }
-                        Glide.with(getApplication()).load(profileImageUrl).into(profileImage);
                     }
                 }
             }
@@ -163,9 +161,9 @@ public class SettingsActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                     break;
-//                case R.id.friends:
-//                    selectedFragment = new friends_fragment();
-//                    break;
+                case R.id.friends:
+                    Intent intent2 = new Intent(SettingsActivity.this, FriendsActivity.class);
+                    break;
 //                case R.id.messages:
 //                    selectedFragment = new message_fragment();
 //                    break;

@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.kenjoel.letsmeet.R;
 import com.kenjoel.letsmeet.authentication.LoginActivity;
 import com.kenjoel.letsmeet.feed.FeedActivity;
+import com.kenjoel.letsmeet.friends.FriendsActivity;
 import com.kenjoel.letsmeet.settings.SettingsActivity;
 
 import butterknife.BindView;
@@ -50,11 +51,11 @@ public class ProfileActivity extends AppCompatActivity {
                     Intent intent = new Intent(ProfileActivity.this, FeedActivity.class);
                     startActivity(intent);
                     break;
-//
-//                case R.id.friends:
-//                    selectedFragment = new friends_fragment();
-//                    break;
-//
+
+                case R.id.friends:
+                    Intent fintent = new Intent(ProfileActivity.this, FriendsActivity.class);
+                    startActivity(fintent);
+                    break;
                 case R.id.settings:
                     Intent sintent = new Intent(ProfileActivity.this, SettingsActivity.class);
                     startActivity(sintent);
