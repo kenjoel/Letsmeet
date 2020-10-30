@@ -51,7 +51,6 @@ public class FeedActivity extends AppCompatActivity {
 
 
 
-    List items;
     List<cards>rowItems;
 
     @BindView(R.id.bottom_navigation)
@@ -61,6 +60,7 @@ public class FeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
         ButterKnife.bind(this);
+        navigationView.setSelectedItemId(R.id.feed);
         navigationView.setOnNavigationItemSelectedListener(navListener);
         Users = FirebaseDatabase.getInstance().getReference().child("Users");
         getGender();

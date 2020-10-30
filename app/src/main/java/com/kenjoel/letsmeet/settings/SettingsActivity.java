@@ -73,8 +73,8 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
 
+        navigationView.setSelectedItemId(R.id.settings);
         navigationView.setOnNavigationItemSelectedListener(navListener);
-
 
         nameProfile = getNameProfile;
         phoneProfile = mPhone;

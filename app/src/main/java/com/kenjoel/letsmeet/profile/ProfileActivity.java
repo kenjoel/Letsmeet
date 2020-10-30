@@ -35,6 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
         ButterKnife.bind(this);
+        navigationView.setSelectedItemId(R.id.profile);
         navigationView.setOnNavigationItemSelectedListener(navListener);
 //        userSex = getIntent().getStringExtra("userSex");
 //        Log.i(TAG, userSex);
