@@ -163,6 +163,7 @@ public class SettingsActivity extends AppCompatActivity {
                     break;
                 case R.id.friends:
                     Intent intent2 = new Intent(SettingsActivity.this, FriendsActivity.class);
+                    startActivity(intent2);
                     break;
 //                case R.id.messages:
 //                    selectedFragment = new message_fragment();

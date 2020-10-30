@@ -48,6 +48,7 @@ public class FeedActivity extends AppCompatActivity {
 
     private static String userSex;
     private String oppositeSex;
+    private Object data;
 
 
 
@@ -86,9 +87,6 @@ public class FeedActivity extends AppCompatActivity {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                cards obj = (cards) dataObject;
-                String userId = obj.getUserId();
-                Users.child(userId).child("connections").child("Nada").child(currentUserId).setValue(true);
                 Toast.makeText(FeedActivity.this, "Nope", Toast.LENGTH_SHORT).show();
             }
 
@@ -103,6 +101,7 @@ public class FeedActivity extends AppCompatActivity {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
+                Toast.makeText(FeedActivity.this, "That's all for today check tomorrow", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -207,7 +206,7 @@ public class FeedActivity extends AppCompatActivity {
         Users.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if(snapshot.exists() && !snapshot.child("connections").child("Nada").hasChild(currentUserId) &&  !snapshot.child("connections").child("Yes").hasChild(currentUserId) && snapshot.child("gender").getValue().toString().equals(oppositeSex)){
+                if(snapshot.exists() && !snapshot.child("connections").child("Yes").hasChild(currentUserId) && snapshot.child("gender").getValue().toString().equals(oppositeSex)){
                     String profileImageUrl = "default";
 
                     if(!snapshot.child("profileImageUrl").getValue().equals("default")){
