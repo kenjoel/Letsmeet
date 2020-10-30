@@ -221,8 +221,8 @@ public class SettingsActivity extends AppCompatActivity {
                             Map userInfo = new HashMap();
                             userInfo.put("profileImageUrl", downloadUrl.toString());
                             mDatabaseReference.updateChildren(userInfo);
+                            startActivity(new Intent(SettingsActivity.this, ProfileActivity.class));
                             finish();
-                            return;
                         }
                     });
                 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@mipmap/ferenc"
     android:orientation="horizontal"
     android:padding="20dp"
     tools:context=".settings.SettingsActivity">
@@ -65,15 +65,18 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
         app:itemBackground="@android:color/transparent"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backbtn"
+        app:layout_constraintVertical_bias="0.989"
         app:menu="@menu/bottom_navigation" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
