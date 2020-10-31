@@ -27,8 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kenjoel.letsmeet.R;
-import com.kenjoel.letsmeet.feed.FeedActivity;
 import com.kenjoel.letsmeet.models.cards;
+import com.kenjoel.letsmeet.models.cardsObject;
 import com.kenjoel.letsmeet.profile.ProfileActivity;
 import com.kenjoel.letsmeet.settings.SettingsActivity;
 import com.squareup.picasso.Picasso;
@@ -41,8 +41,11 @@ import butterknife.ButterKnife;
 public class FriendsActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseRef;
+    private cards cardi;
     private FirebaseRecyclerAdapter adapter;
     private String userId;
+    private String keysOfUsers;
 
     @BindView(R.id.bottom_navigation) BottomNavigationView navigationView;
     @BindView(R.id.recyclerView)
@@ -57,7 +60,11 @@ public class FriendsActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(navListener);
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("connections").child("Yes");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("connections").child("saved");
+        keysOfUsers = databaseReference.getKey();
+
+        databaseRef = FirebaseDatabase.getInstance().getReference().child("Users").child(keysOfUsers);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.hasFixedSize();
         fetch();
@@ -65,9 +72,9 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
     private void fetch() {
-        FirebaseRecyclerOptions<cards> options = new FirebaseRecyclerOptions.Builder<cards>()
-                .setQuery(databaseReference, cards.class).build();
-        final FirebaseRecyclerAdapter<cards, cardsViewHolder> firabaseAdapter = new FirebaseRecyclerAdapter<cards, cardsViewHolder>(options) {
+            FirebaseRecyclerOptions<cardsObject> options = new FirebaseRecyclerOptions.Builder<cardsObject>()
+                .setQuery(databaseRef, cardsObject.class).build();
+        final FirebaseRecyclerAdapter<cardsObject, cardsViewHolder> firebaseAdapter = new FirebaseRecyclerAdapter<cardsObject, cardsViewHolder>(options) {
             @Override
             public cardsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
@@ -75,49 +82,26 @@ public class FriendsActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull final cardsViewHolder holder, int position, @NonNull cards model) {
-                databaseReference.addValueEventListener(new ValueEventListener() {
+            protected void onBindViewHolder(@NonNull final cardsViewHolder holder, int position, @NonNull cardsObject model) {
+                databaseRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.exists()){
                             for(DataSnapshot data: snapshot.getChildren()){
-                                fetchFriends(data.getKey());
-                            }
+                                String name;
+                                String phone;
+                                String profileImageUrl;
+                                cardsObject cardsObject = data.getValue(cardsObject.class);
+                                name = cardsObject.getName();
+                                phone = cardsObject.getPhone();
+                                profileImageUrl = cardsObject.getProfileImageUrl();
 
+                                holder.mNameView.setText(name);
+                                holder.mNumberView.setText(phone);
+                                Picasso.get().load(profileImageUrl).into(holder.mImageView);
                         }
                     }
-
-                    private void fetchFriends(String key) {
-                        DatabaseReference friendsDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(key);
-                        friendsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(snapshot.exists()){
-                                    String name = "";
-                                    String profileImageUrl = "";
-                                    String phone = "";
-                                    if (snapshot.child("name") != null){
-                                        name = snapshot.child("name").getValue().toString();
-                                        phone = snapshot.child("phone").getValue().toString();
-                                        profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
-                                    }
-                                    holder.mNameView.setText(name);
-                                    holder.mNumberView.setText(phone);
-                                    Picasso.get().load(profileImageUrl).into(holder.mImageView);
-                                }else {
-                                    Toast.makeText(FriendsActivity.this, "You have no friends, please swipe right", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
@@ -125,8 +109,8 @@ public class FriendsActivity extends AppCompatActivity {
                 });
             }
         };
-        mRecyclerView.setAdapter(firabaseAdapter);
-        firabaseAdapter.startListening();
+        mRecyclerView.setAdapter(firebaseAdapter);
+        firebaseAdapter.startListening();
     }
 
     BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
