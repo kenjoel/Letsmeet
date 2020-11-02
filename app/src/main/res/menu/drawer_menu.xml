@@ -5,34 +5,29 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/profile"
-            android:backgroundTint="@android:color/transparent"
-            android:icon="@drawable/close"
+            android:icon="@drawable/ic_baseline_account_circle_24"
             android:title="profile" />
 
         <item
             android:id="@+id/friends"
-            android:backgroundTint="@android:color/transparent"
-            android:icon="@drawable/friends"
+            android:icon="@drawable/ic_baseline_person_add_24"
             android:title="friends" />
 
 
         <item
             android:id="@+id/settings"
-            android:backgroundTint="@android:color/transparent"
-            android:icon="@drawable/setting"
+            android:icon="@drawable/ic_baseline_settings_24"
             android:title="settings" />
 
 
         <item
             android:id="@+id/messages"
-            android:backgroundTint="@android:color/transparent"
-            android:icon="@drawable/message"
+            android:icon="@drawable/ic_baseline_message_24"
             android:title="messages" />
 
         <item
             android:id="@+id/feed"
-            android:backgroundTint="@android:color/transparent"
-            android:icon="@drawable/lase"
+            android:icon="@drawable/ic_baseline_dynamic_feed_24"
             android:title="feed" />
     </group>
 
