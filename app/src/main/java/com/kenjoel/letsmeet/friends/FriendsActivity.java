@@ -65,36 +65,36 @@ public class    FriendsActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("connections");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.hasFixedSize();
-        fetch();
+//        fetch();
+        getUserInfo();
+
     }
 
-    private void fetch(){
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot data : snapshot.getChildren()){
-                    getUserInfo(data.getKey());
-                }
-            }
+//    private void fetch(){
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    getUserInfo(snapshot.getKey());
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void getUserInfo(String key) {
-        final DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(key);
+    private void getUserInfo() {
+        final DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users");
         Log.d(TAG, userDb.toString());
 
-        FirebaseRecyclerOptions<String> options = new FirebaseRecyclerOptions.Builder<String>()
-                .setQuery(userDb,String.class)
+        FirebaseRecyclerOptions<cardsObject> options = new FirebaseRecyclerOptions.Builder<cardsObject>()
+                .setQuery(userDb,cardsObject.class)
                 .build();
         Log.i(TAG, "getUserInfoReturned:" + options.getSnapshots());
 
-        final FirebaseRecyclerAdapter<String, cardsViewHolder> adapter =
-        new FirebaseRecyclerAdapter<String, cardsViewHolder>(options) {
+        final FirebaseRecyclerAdapter<cardsObject, cardsViewHolder> adapter =
+        new FirebaseRecyclerAdapter<cardsObject, cardsViewHolder>(options) {
             @NonNull
             @Override
             public cardsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -104,7 +104,9 @@ public class    FriendsActivity extends AppCompatActivity {
 
 
             @Override
-            protected void onBindViewHolder(@NonNull final cardsViewHolder holder, final int position, @NonNull String model) {
+            protected void onBindViewHolder(@NonNull final cardsViewHolder holder, final int position, @NonNull cardsObject model) {
+                final String key = getRef(position).getKey();
+
                 userDb.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -113,11 +115,13 @@ public class    FriendsActivity extends AppCompatActivity {
                         String profileImageUrl = "";
                         String gender = "";
 
-                        if(snapshot.child("gender") != null){
-                            gender = snapshot.child("gender").getValue().toString();
-                            name = snapshot.child("name").getValue().toString();
-                            phone = snapshot.child("phone").getValue().toString();
-                            profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
+                        Log.i(TAG, snapshot.child(key).toString());
+
+                        if(snapshot.child(key) != null){
+                            gender = snapshot.child(key).child("gender").getValue().toString();
+                            name = snapshot.child(key).child("name").getValue().toString();
+                            phone = snapshot.child(key).child("phone").getValue().toString();
+                            profileImageUrl = snapshot.child(key).child("profileImageUrl").getValue().toString();
                         }
                         holder.mNameView.setText(name);
                         holder.mNumberView.setText(phone);

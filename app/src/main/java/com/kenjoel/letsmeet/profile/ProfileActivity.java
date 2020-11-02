@@ -28,6 +28,7 @@ import com.kenjoel.letsmeet.authentication.LoginActivity;
 import com.kenjoel.letsmeet.feed.FeedActivity;
 import com.kenjoel.letsmeet.friends.FriendsActivity;
 import com.kenjoel.letsmeet.settings.SettingsActivity;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +38,8 @@ public class ProfileActivity extends AppCompatActivity {
     private static final String TAG = "Users Sex is";
     private DatabaseReference UsersInfo;
     private String userSex, name, profileImageUrl, phone;
+    private TextView nameProfile, numberProfile, genderProfile;
+    private ImageView profileImage;
 
 
     @BindView(R.id.bottom_navigation) BottomNavigationView navigationView;
@@ -57,6 +60,11 @@ public class ProfileActivity extends AppCompatActivity {
         navigationView.setOnNavigationItemSelectedListener(navListener);
 
         UsersInfo = FirebaseDatabase.getInstance().getReference().child("Users");
+        numberProfile = profileNumber;
+        nameProfile = mUsername;
+        genderProfile = profileGender;
+        profileImage = mImageUser;
+
         getInfo();
 //        userSex = getIntent().getStringExtra("userSex");
 //        Log.i(TAG, userSex);
@@ -72,24 +80,25 @@ public class ProfileActivity extends AppCompatActivity {
         France.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String name = "";
-                String phone = "";
-                String profilePicture = "";
                 if(snapshot.child("name").exists()){
                     name = snapshot.child("name").getValue().toString();
+                    userSex = snapshot.child("gender").getValue().toString();
                     phone = snapshot.child("phone").getValue().toString();
-                    profilePicture = snapshot.child("profileImageUrl").getValue().toString();
+                    profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
                 }else{
                     Toast.makeText(ProfileActivity.this, "No current user info", Toast.LENGTH_SHORT);
                 }
-
+                nameProfile.setText(name);
+                numberProfile.setText(phone);
+                genderProfile.setText(userSex);
+                Picasso.get().load(profileImageUrl).into(profileImage);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        })
+        });
 
     }
 
