@@ -7,12 +7,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.kenjoel.letsmeet.R;
 import com.kenjoel.letsmeet.authentication.LoginActivity;
 import com.kenjoel.letsmeet.feed.FeedActivity;
@@ -25,10 +35,17 @@ import butterknife.ButterKnife;
 public class ProfileActivity extends AppCompatActivity {
 
     private static final String TAG = "Users Sex is";
-    private String userSex;
+    private DatabaseReference UsersInfo;
+    private String userSex, name, profileImageUrl, phone;
 
 
     @BindView(R.id.bottom_navigation) BottomNavigationView navigationView;
+    @BindView(R.id.tv_name) TextView mUsername;
+    @BindView(R.id.imageUser) ImageView mImageUser;
+    @BindView(R.id.profileEmail) TextView profileEmail;
+    @BindView(R.id.profileNumber) TextView profileNumber;
+    @BindView(R.id.profileGender) TextView profileGender;
+
 
 
     @Override
@@ -38,10 +55,44 @@ public class ProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         navigationView.setSelectedItemId(R.id.profile);
         navigationView.setOnNavigationItemSelectedListener(navListener);
+
+        UsersInfo = FirebaseDatabase.getInstance().getReference().child("Users");
+        getInfo();
 //        userSex = getIntent().getStringExtra("userSex");
 //        Log.i(TAG, userSex);
 
     }
+
+    private void getInfo() {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userUid = user.getUid();
+
+        DatabaseReference France = UsersInfo.child(userUid);
+
+        France.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String name = "";
+                String phone = "";
+                String profilePicture = "";
+                if(snapshot.child("name").exists()){
+                    name = snapshot.child("name").getValue().toString();
+                    phone = snapshot.child("phone").getValue().toString();
+                    profilePicture = snapshot.child("profileImageUrl").getValue().toString();
+                }else{
+                    Toast.makeText(ProfileActivity.this, "No current user info", Toast.LENGTH_SHORT);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        })
+
+    }
+
 
     BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -72,6 +123,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     };
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

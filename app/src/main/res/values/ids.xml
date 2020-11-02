@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="profileImage" type="id" />
+    <item name="frameholder" type="id" />
+    <item name="firstWelcome" type="id" />
+    <item name="secondWelcome" type="id" />
+    <item name="rellay1" type="id" />
+    <item name="imgUser" type="id" />
+    <item name="profileNumber" type="id" />
+    <item name="profileEmail" type="id" />
+    <item name="imageUser" type="id" />
+</resources>

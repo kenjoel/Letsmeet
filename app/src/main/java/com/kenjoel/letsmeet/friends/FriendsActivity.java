@@ -2,6 +2,7 @@ package com.kenjoel.letsmeet.friends;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,18 +37,16 @@ import com.kenjoel.letsmeet.settings.SettingsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FriendsActivity extends AppCompatActivity {
+public class    FriendsActivity extends AppCompatActivity {
+    private static final String TAG = "user keys are";
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-    private DatabaseReference databaseRef;
-    private cards cardi;
-    private FirebaseRecyclerAdapter adapter;
     private String userId;
-    private String keysOfUsers;
 
     @BindView(R.id.bottom_navigation) BottomNavigationView navigationView;
     @BindView(R.id.recyclerView)
@@ -59,49 +60,70 @@ public class FriendsActivity extends AppCompatActivity {
         navigationView.setSelectedItemId(R.id.friends);
         navigationView.setOnNavigationItemSelectedListener(navListener);
 
-        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("connections").child("saved");
-        keysOfUsers = databaseReference.getKey();
-
-        databaseRef = FirebaseDatabase.getInstance().getReference().child("Users").child(keysOfUsers);
-
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("connections");
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.hasFixedSize();
         fetch();
-
     }
 
-    private void fetch() {
-            FirebaseRecyclerOptions<cardsObject> options = new FirebaseRecyclerOptions.Builder<cardsObject>()
-                .setQuery(databaseRef, cardsObject.class).build();
-        final FirebaseRecyclerAdapter<cardsObject, cardsViewHolder> firebaseAdapter = new FirebaseRecyclerAdapter<cardsObject, cardsViewHolder>(options) {
+    private void fetch(){
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public cardsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
-                return new cardsViewHolder(view);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot data : snapshot.getChildren()){
+                    getUserInfo(data.getKey());
+                }
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull final cardsViewHolder holder, int position, @NonNull cardsObject model) {
-                databaseRef.addValueEventListener(new ValueEventListener() {
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getUserInfo(String key) {
+        final DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users").child(key);
+        Log.d(TAG, userDb.toString());
+
+        FirebaseRecyclerOptions<String> options = new FirebaseRecyclerOptions.Builder<String>()
+                .setQuery(userDb,String.class)
+                .build();
+        Log.i(TAG, "getUserInfoReturned:" + options.getSnapshots());
+
+        final FirebaseRecyclerAdapter<String, cardsViewHolder> adapter =
+        new FirebaseRecyclerAdapter<String, cardsViewHolder>(options) {
+            @NonNull
+            @Override
+            public cardsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+                return new cardsViewHolder(v);
+            }
+
+
+            @Override
+            protected void onBindViewHolder(@NonNull final cardsViewHolder holder, final int position, @NonNull String model) {
+                userDb.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            for(DataSnapshot data: snapshot.getChildren()){
-                                String name;
-                                String phone;
-                                String profileImageUrl;
-                                cardsObject cardsObject = data.getValue(cardsObject.class);
-                                name = cardsObject.getName();
-                                phone = cardsObject.getPhone();
-                                profileImageUrl = cardsObject.getProfileImageUrl();
+                        String name = "";
+                        String phone = "";
+                        String profileImageUrl = "";
+                        String gender = "";
 
-                                holder.mNameView.setText(name);
-                                holder.mNumberView.setText(phone);
-                                Picasso.get().load(profileImageUrl).into(holder.mImageView);
+                        if(snapshot.child("gender") != null){
+                            gender = snapshot.child("gender").getValue().toString();
+                            name = snapshot.child("name").getValue().toString();
+                            phone = snapshot.child("phone").getValue().toString();
+                            profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
                         }
+                        holder.mNameView.setText(name);
+                        holder.mNumberView.setText(phone);
+                        Picasso.get().load(profileImageUrl).into(holder.mImageView);
                     }
-                    }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
@@ -109,10 +131,10 @@ public class FriendsActivity extends AppCompatActivity {
                 });
             }
         };
-        mRecyclerView.setAdapter(firebaseAdapter);
-        firebaseAdapter.startListening();
+        adapter.notifyDataSetChanged();
+        mRecyclerView.setAdapter(adapter);
+        adapter.startListening();
     }
-
     BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -126,7 +148,6 @@ public class FriendsActivity extends AppCompatActivity {
                     Intent fintent = new Intent(FriendsActivity.this, SettingsActivity.class);
                     startActivity(fintent);
                     break;
-//
                 case R.id.settings:
                     Intent sintent = new Intent(FriendsActivity.this, SettingsActivity.class);
                     startActivity(sintent);
@@ -160,7 +181,5 @@ public class FriendsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
     }
-
-
 
 }

@@ -94,14 +94,15 @@ public class FeedActivity extends AppCompatActivity {
             public void onRightCardExit(Object dataObject) {
                 cards obj = (cards) dataObject;
                 String userId = obj.getUserId();
-                Users.child(userId).child("connections").child("Yes").child(currentUserId).setValue(true);
-                Toast.makeText(FeedActivity.this, "Yeah", Toast.LENGTH_SHORT).show();
-                matchMet(userId);
+                Users.child(currentUserId).child("connections").child(userId).setValue(true);
+                Toast.makeText(FeedActivity.this, "User Followed", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                Toast.makeText(FeedActivity.this, "That's all for today check tomorrow", Toast.LENGTH_SHORT).show();
+                if(itemsInAdapter == 1){
+                    Toast.makeText(FeedActivity.this, "That's all for today check tomorrow", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -119,26 +120,6 @@ public class FeedActivity extends AppCompatActivity {
         });
 
     }
-
-    private void matchMet(String userId) {
-        DatabaseReference currentuser = Users.child(currentUserId).child("connections").child("Yes").child(userId);
-        currentuser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    Toast.makeText(FeedActivity.this, "User Saved", Toast.LENGTH_LONG).show();
-                    Users.child(snapshot.getKey()).child("connections").child("saved").child(currentUserId).setValue(true);
-                    Users.child(currentUserId).child("connections").child("saved").child(snapshot.getKey()).setValue(true);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
 
     BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -206,7 +187,7 @@ public class FeedActivity extends AppCompatActivity {
         Users.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if(snapshot.exists() && !snapshot.child("connections").child("Yes").hasChild(currentUserId) && snapshot.child("gender").getValue().toString().equals(oppositeSex)){
+                if(snapshot.exists() && !snapshot.child("connections").hasChild(currentUserId) && snapshot.child("gender").getValue().toString().equals(oppositeSex)){
                     String profileImageUrl = "default";
 
                     if(!snapshot.child("profileImageUrl").getValue().equals("default")){
