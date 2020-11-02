@@ -24,21 +24,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mCreateAccountButton.setOnClickListener(this);
-        mLoginButtton.setOnClickListener(this);
+//        mCreateAccountButton.setOnClickListener(this);
+//        mLoginButtton.setOnClickListener(this);
     }
 
-    @Override
-    public void  onClick(View v){
-        if(v == mCreateAccountButton){
-            Intent intent = new Intent(MainActivity.this, SignupActivity.class);
-            startActivity(intent);
-            Toast.makeText( MainActivity.this,"fill in your details", Toast.LENGTH_LONG).show();
-        }else if(v == mLoginButtton){
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
-    }
+//    @Override
+//    public void  onClick(View v){
+//        if(v == mCreateAccountButton){
+//            Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+//            startActivity(intent);
+//            Toast.makeText( MainActivity.this,"fill in your details", Toast.LENGTH_LONG).show();
+//        }else if(v == mLoginButtton){
+//            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//            startActivity(intent);
+//        }
+//    }
 
 
 
