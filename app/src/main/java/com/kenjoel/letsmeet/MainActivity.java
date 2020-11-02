@@ -14,7 +14,7 @@ import com.kenjoel.letsmeet.authentication.SignupActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.creation) Button mCreateAccountButton;
     @BindView(R.id.login) Button mLoginButtton;
