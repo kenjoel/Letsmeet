@@ -6,27 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.lorentzos.flingswipe.SwipeFlingAdapterView
-        android:id="@+id/frame"
-        android:background="#ffeee9e2"
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="com.kenjoel.letsmeet.fragments.feedFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:rotation_degrees="15.5"
-        tools:context=".feed.FeedActivity" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:itemBackground="@android:color/transparent"
-        app:itemIconTint="@android:color/white"
-        app:itemTextColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frame"
-        app:layout_constraintVertical_bias="0.989"
-        app:menu="@menu/bottom_navigation" />
-
+        tools:layout="@layout/fragment_feed"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
