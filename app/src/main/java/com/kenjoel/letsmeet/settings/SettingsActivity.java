@@ -76,11 +76,7 @@ public class SettingsActivity extends AppCompatActivity {
         navigationView.setSelectedItemId(R.id.settings);
         navigationView.setOnNavigationItemSelectedListener(navListener);
 
-        nameProfile = getNameProfile;
-        phoneProfile = mPhone;
-        profileImage = imageView;
-        mConfirmButton = mConfirmBtn;
-        mBackButton = backBtn;
+
 
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();

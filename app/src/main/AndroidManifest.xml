@@ -38,7 +38,7 @@
         <activity android:name=".authentication.LoginActivity" />
         <activity
             android:name=".MainActivity"
-            android:label="MainActivity"
+            android:label="Connect"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

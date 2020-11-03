@@ -21,6 +21,7 @@ import com.kenjoel.letsmeet.authentication.LoginActivity;
 import com.kenjoel.letsmeet.authentication.SignupActivity;
 import com.kenjoel.letsmeet.fragments.feedFragment;
 import com.kenjoel.letsmeet.fragments.profile_fragment;
+import com.kenjoel.letsmeet.fragments.settingsFragment;
 import com.kenjoel.letsmeet.profile.ProfileActivity;
 
 import butterknife.BindView;
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.feed:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new feedFragment()).commit();
                 break;
+            case R.id.settings:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame, new settingsFragment()).commit();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
