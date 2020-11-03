@@ -94,11 +94,20 @@ public class settingsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, v);
         // Inflate the layout for this fragment
+
         nameProfile = getNameProfile;
         phoneProfile = mPhone;
         profileImage = imageView;
         mConfirmButton = mConfirmBtn;
         mBackButton = backBtn;
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, 1);
+            }
+        });
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +118,7 @@ public class settingsFragment extends Fragment {
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getFragmentManager().popBackStackImmediate();
             }
         });
 
@@ -198,12 +208,13 @@ public class settingsFragment extends Fragment {
                             Map userInfo = new HashMap();
                             userInfo.put("profileImageUrl", downloadUrl.toString());
                             mDatabaseReference.updateChildren(userInfo);
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame, new profile_fragment());
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new profile_fragment());
                         }
                     });
                 }
             });
         } else{
+
             return;
         }
 

@@ -30,9 +30,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
 
-//    @BindView(R.id.creation) Button mCreateAccountButton;
-//    @BindView(R.id.login) Button mLoginButtton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +44,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-//        mCreateAccountButton.setOnClickListener(this);
-//        mLoginButtton.setOnClickListener(this);
     }
     public void onBackPressed(){
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
@@ -69,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new feedFragment()).commit();
                 break;
             case R.id.settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frame, new settingsFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new settingsFragment()).commit();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
