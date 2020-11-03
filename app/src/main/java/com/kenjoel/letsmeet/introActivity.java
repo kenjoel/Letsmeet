@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.kenjoel.letsmeet.adapters.sliderAdapter;
+import com.kenjoel.letsmeet.authentication.LoginActivity;
 import com.kenjoel.letsmeet.fragments.Login;
 import com.kenjoel.letsmeet.fragments.signup;
 
@@ -72,7 +73,7 @@ public class introActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(introActivity.this, MainActivity.class);
+        Intent intent = new Intent(introActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
     }

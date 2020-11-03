@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.kenjoel.letsmeet.MainActivity;
 import com.kenjoel.letsmeet.profile.ProfileActivity;
 import com.kenjoel.letsmeet.R;
 
@@ -52,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
 
                 if (user != null) {
-                    Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                     return;

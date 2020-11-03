@@ -33,7 +33,6 @@ public class profile_fragment extends Fragment {
 
     private static final String TAG = "Users Sex is";
     private DatabaseReference UsersInfo;
-    private String userSex, name, profileImageUrl, phone;
     private TextView nameProfile, numberProfile, genderProfile;
     private ImageView profileImage;
 
@@ -62,10 +61,21 @@ public class profile_fragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         UsersInfo = FirebaseDatabase.getInstance().getReference().child("Users");
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View v = inflater.inflate(R.layout.fragment_profile_fragment, container, false);
+        ButterKnife.bind(this, v);
         numberProfile = profileNumber;
         nameProfile = mUsername;
         genderProfile = profileGender;
         profileImage = mImageUser;
+        getInfo();
+        // Inflate the layout for this fragment
+        return v;
     }
 
 
@@ -78,6 +88,10 @@ public class profile_fragment extends Fragment {
         France.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String userSex="";
+                String name="";
+                String profileImageUrl="";
+                String phone="";
                 if(snapshot.child("name").exists()){
                     name = snapshot.child("name").getValue().toString();
                     userSex = snapshot.child("gender").getValue().toString();
@@ -101,13 +115,4 @@ public class profile_fragment extends Fragment {
     }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_profile_fragment, container, false);
-        ButterKnife.bind(this, v);
-        getInfo();
-        // Inflate the layout for this fragment
-        return v;
-    }
 }

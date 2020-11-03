@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.kenjoel.letsmeet.MainActivity;
 import com.kenjoel.letsmeet.profile.ProfileActivity;
 import com.kenjoel.letsmeet.R;
 
@@ -60,7 +61,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                 final FirebaseUser user = mAuth.getInstance().getCurrentUser();
 
                 if (user != null) {
-                    Intent intent = new Intent(SignupActivity.this, ProfileActivity.class);
+                    Intent intent = new Intent(SignupActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                     return;
