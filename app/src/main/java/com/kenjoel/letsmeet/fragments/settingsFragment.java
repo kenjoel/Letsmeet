@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -112,13 +113,19 @@ public class settingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveUserInfo();
+                try {
+                    finalize();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
             }
         });
 
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStackImmediate();
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                fm.popBackStack();
             }
         });
 
@@ -208,7 +215,8 @@ public class settingsFragment extends Fragment {
                             Map userInfo = new HashMap();
                             userInfo.put("profileImageUrl", downloadUrl.toString());
                             mDatabaseReference.updateChildren(userInfo);
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new profile_fragment());
+                            FragmentManager fm = getActivity().getSupportFragmentManager();
+                            fm.popBackStack();
                         }
                     });
                 }
