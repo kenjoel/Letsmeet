@@ -42,7 +42,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class    FriendsActivity extends AppCompatActivity {
+public class  FriendsActivity extends AppCompatActivity {
     private static final String TAG = "user keys are";
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;

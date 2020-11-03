@@ -20,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.kenjoel.letsmeet.authentication.LoginActivity;
 import com.kenjoel.letsmeet.authentication.SignupActivity;
 import com.kenjoel.letsmeet.fragments.feedFragment;
+import com.kenjoel.letsmeet.fragments.friendsFragment;
 import com.kenjoel.letsmeet.fragments.profile_fragment;
 import com.kenjoel.letsmeet.fragments.settingsFragment;
 import com.kenjoel.letsmeet.profile.ProfileActivity;
@@ -64,6 +65,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new settingsFragment()).commit();
+
+            case R.id.friends:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new friendsFragment()).commit();
+
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
