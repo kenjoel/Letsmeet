@@ -1,5 +1,6 @@
 package com.kenjoel.letsmeet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class introActivity extends AppCompatActivity {
+public class introActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ViewPager viewPager;
 
@@ -43,6 +44,7 @@ public class introActivity extends AppCompatActivity {
         viewPager.setAdapter(mSliderAdapter);
         start = starto;
         viewPager.addOnPageChangeListener(pageChangeListener);
+        start.setOnClickListener(this);
     }
 
     ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -54,12 +56,12 @@ public class introActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
             mCurrentPage=position;
-            if(position == 0){
+            if(position > 0){
                 start.setEnabled(true);
                 start.setVisibility(View.VISIBLE);
+            }else{
+                start.setVisibility(View.INVISIBLE);
             }
-
-
         }
 
         @Override
@@ -67,4 +69,11 @@ public class introActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(introActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
