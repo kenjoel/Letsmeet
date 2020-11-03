@@ -53,8 +53,6 @@ public class settingsFragment extends Fragment {
 
     private ImageView profileImage;
 
-    private FirebaseAuth mAuth;
-
     private DatabaseReference mDatabaseReference;
 
     private String userId,name,phone,profileImageUrl;
@@ -81,11 +79,6 @@ public class settingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        userId = mAuth.getCurrentUser().getUid();
-        Log.i(TAG, userId);
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-        getUserInfo();
     }
 
     @Override
@@ -93,6 +86,11 @@ public class settingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, v);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getCurrentUser().getUid();
+        Log.i(TAG, userId);
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+        getUserInfo();
         // Inflate the layout for this fragment
 
         nameProfile = getNameProfile;

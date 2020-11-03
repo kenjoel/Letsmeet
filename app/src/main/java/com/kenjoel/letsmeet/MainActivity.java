@@ -6,6 +6,8 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,12 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.kenjoel.letsmeet.authentication.LoginActivity;
 import com.kenjoel.letsmeet.authentication.SignupActivity;
 import com.kenjoel.letsmeet.fragments.feedFragment;
@@ -25,20 +33,34 @@ import com.kenjoel.letsmeet.fragments.friendsFragment;
 import com.kenjoel.letsmeet.fragments.profile_fragment;
 import com.kenjoel.letsmeet.fragments.settingsFragment;
 import com.kenjoel.letsmeet.profile.ProfileActivity;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
+    private FirebaseAuth mAuth;
+    private DatabaseReference UsersInfo;
+
+    private ImageView majorImage;
+    private TextView majorText;
+
+    @BindView(R.id.imageViewCard)
+    ImageView imageView;
+    @BindView(R.id.name)
+    TextView mName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        UsersInfo = FirebaseDatabase.getInstance().getReference().child("Users");
         drawerLayout = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_app_bar_open_drawer_description, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -46,7 +68,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        majorImage = imageView;
+        majorText = mName;
+        displayUserInfo();
     }
+
+    private void displayUserInfo() {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+
+        DatabaseReference Germany = UsersInfo.child(userId);
+
+        Germany.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String imageUrl = "";
+                String nameText = "";
+                if(snapshot.child("profileImageUrl"). exists()){
+                    imageUrl = snapshot.child("profileImageUrl").getValue().toString();
+                    nameText = snapshot.child("name").getValue().toString();
+                }
+
+                majorText.setText(nameText);
+                Picasso.get().load(imageUrl).into(majorImage);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     public void onBackPressed(){
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -82,18 +136,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
-//    @Override
-//    public void  onClick(View v){
-//        if(v == mCreateAccountButton){
-//            Intent intent = new Intent(MainActivity.this, SignupActivity.class);
-//            startActivity(intent);
-//            Toast.makeText( MainActivity.this,"fill in your details", Toast.LENGTH_LONG).show();
-//        }else if(v == mLoginButtton){
-//            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//            startActivity(intent);
-//        }
-//    }
 
 
 

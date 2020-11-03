@@ -33,7 +33,7 @@
         <item
             android:id="@+id/action_logout"
             android:icon="@drawable/ic_baseline_follow_the_signs_24"
-            android:title="feed" />
+            android:title="logout" />
     </group>
 
     <item android:title="Communicate">

@@ -13,10 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,23 +31,16 @@ import com.squareup.picasso.Picasso;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link friendsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class friendsFragment extends Fragment {
 
 
     private static final String TAG = "user keys are";
-    private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
-    private String userId;
+    private FirebaseUser mAuth;
+    private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
-
-
 
 
     public friendsFragment() {
@@ -65,29 +60,27 @@ public class friendsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-        userId = mAuth.getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId).child("connections");
 
-
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
+        mAuth = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
         ButterKnife.bind(this, v);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
         mRecyclerView.hasFixedSize();
-//        fetch();
         getUserInfo();
-        // Inflate the layout for this fragment
         return v;
     }
 
 
     private void getUserInfo() {
-        final DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users");
+        String userId = mAuth.getUid();
+        final DatabaseReference userDb = databaseReference.child(userId).child("connections");
         Log.d(TAG, userDb.toString());
 
         FirebaseRecyclerOptions<cardsObject> options = new FirebaseRecyclerOptions.Builder<cardsObject>()
@@ -120,10 +113,10 @@ public class friendsFragment extends Fragment {
                                 Log.i(TAG, snapshot.child(key).toString());
 
                                 if(snapshot.child(key) != null){
-                                    gender = snapshot.child(key).child("gender").getValue().toString();
-                                    name = snapshot.child(key).child("name").getValue().toString();
-                                    phone = snapshot.child(key).child("phone").getValue().toString();
-                                    profileImageUrl = snapshot.child(key).child("profileImageUrl").getValue().toString();
+                                    gender = snapshot.child(key).child("gender").getValue(String.class);
+                                    name = snapshot.child(key).child("name").getValue(String.class);
+                                    phone = snapshot.child(key).child("phone").getValue(String.class);
+                                    profileImageUrl = snapshot.child(key).child("profileImageUrl").getValue(String.class);
                                 }
                                 holder.mNameView.setText(name);
                                 holder.mNumberView.setText(phone);
@@ -157,6 +150,8 @@ public class friendsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        //updateUI(currentUser);
     }
+
 
 }

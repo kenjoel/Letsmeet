@@ -4,20 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.kenjoel.letsmeet.adapters.sliderAdapter;
 import com.kenjoel.letsmeet.authentication.LoginActivity;
-import com.kenjoel.letsmeet.fragments.Login;
-import com.kenjoel.letsmeet.fragments.signup;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
