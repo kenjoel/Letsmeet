@@ -34,10 +34,10 @@ import butterknife.ButterKnife;
 public class friendsFragment extends Fragment {
 
 
-    private static final String TAG = "user keys are";
+    private static final String TAG = "she got here successfully";
     private DatabaseReference databaseReference;
     private FirebaseUser mAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
+    private  String theUseId;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -60,9 +60,11 @@ public class friendsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getArguments() != null){
+            theUseId = getArguments().getString("userId");
+            Log.i(TAG, theUseId);
+        }
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
-        mAuth = FirebaseAuth.getInstance().getCurrentUser();
     }
 
     @Override
@@ -79,8 +81,7 @@ public class friendsFragment extends Fragment {
 
 
     private void getUserInfo() {
-        String userId = mAuth.getUid();
-        final DatabaseReference userDb = databaseReference.child(userId).child("connections");
+        final DatabaseReference userDb = databaseReference.child(theUseId).child("connections");
         Log.d(TAG, userDb.toString());
 
         FirebaseRecyclerOptions<cardsObject> options = new FirebaseRecyclerOptions.Builder<cardsObject>()

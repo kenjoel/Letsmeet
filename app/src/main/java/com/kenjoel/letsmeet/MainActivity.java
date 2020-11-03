@@ -2,6 +2,7 @@ package com.kenjoel.letsmeet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
@@ -39,28 +41,26 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static String TAG = "And the user iiiss, drumroll";
     private DrawerLayout drawerLayout;
-    private FirebaseAuth mAuth;
     private DatabaseReference UsersInfo;
 
-    private ImageView majorImage;
-    private TextView majorText;
 
-    @BindView(R.id.imageViewCard)
-    ImageView imageView;
-    @BindView(R.id.name)
-    TextView mName;
+    private String userId;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        UsersInfo = FirebaseDatabase.getInstance().getReference().child("Users");
         drawerLayout = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
+        userId =  FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_app_bar_open_drawer_description, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -68,37 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        majorImage = imageView;
-        majorText = mName;
-        displayUserInfo();
-    }
-
-    private void displayUserInfo() {
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = user.getUid();
-
-        DatabaseReference Germany = UsersInfo.child(userId);
-
-        Germany.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String imageUrl = "";
-                String nameText = "";
-                if(snapshot.child("profileImageUrl"). exists()){
-                    imageUrl = snapshot.child("profileImageUrl").getValue().toString();
-                    nameText = snapshot.child("name").getValue().toString();
-                }
-
-                majorText.setText(nameText);
-                Picasso.get().load(imageUrl).into(majorImage);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     public void onBackPressed(){
@@ -119,10 +88,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new feedFragment()).commit();
                 break;
             case R.id.settings:
+                Bundle bundle = new Bundle();
+                bundle.putString("userId", userId);
+                Fragment fragment = new settingsFragment();
+                fragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new settingsFragment()).commit();
+                break;
 
             case R.id.friends:
+                Bundle bun = new Bundle();
+                bun.putString("userId", userId);
+                Fragment frag = new friendsFragment();
+                frag.setArguments(bun);
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new friendsFragment()).commit();
+                break;
 
             case R.id.action_logout:
                 FirebaseAuth.getInstance().signOut();
@@ -130,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 finish();
                 return true;
-
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

@@ -57,6 +57,8 @@ public class settingsFragment extends Fragment {
 
     private String userId,name,phone,profileImageUrl;
 
+    private String actualUserId;
+
     private String userSex;
     private Uri resultUri;
 
@@ -79,6 +81,9 @@ public class settingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null){
+            actualUserId = getArguments().getString("userId");
+        }
     }
 
     @Override
@@ -86,13 +91,9 @@ public class settingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, v);
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        userId = mAuth.getCurrentUser().getUid();
-        Log.i(TAG, userId);
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
-        getUserInfo();
+        Log.i(TAG, actualUserId);
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(actualUserId);
         // Inflate the layout for this fragment
-
         nameProfile = getNameProfile;
         phoneProfile = mPhone;
         profileImage = imageView;
@@ -125,7 +126,7 @@ public class settingsFragment extends Fragment {
                 fm.popBackStack();
             }
         });
-
+        getUserInfo();
         return v;
     }
 
