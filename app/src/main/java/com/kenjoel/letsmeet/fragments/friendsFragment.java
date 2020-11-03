@@ -23,7 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kenjoel.letsmeet.R;
-import com.kenjoel.letsmeet.friends.FriendsActivity;
 import com.kenjoel.letsmeet.models.cardsObject;
 import com.squareup.picasso.Picasso;
 

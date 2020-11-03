@@ -35,7 +35,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.kenjoel.letsmeet.R;
 import com.kenjoel.letsmeet.profile.ProfileActivity;
-import com.kenjoel.letsmeet.settings.SettingsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;

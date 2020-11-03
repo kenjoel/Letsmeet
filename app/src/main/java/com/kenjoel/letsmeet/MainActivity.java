@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.kenjoel.letsmeet.authentication.LoginActivity;
 import com.kenjoel.letsmeet.authentication.SignupActivity;
 import com.kenjoel.letsmeet.fragments.feedFragment;
@@ -68,6 +69,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.friends:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new friendsFragment()).commit();
+
+            case R.id.action_logout:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
 
         }
 

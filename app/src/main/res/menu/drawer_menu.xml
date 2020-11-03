@@ -29,6 +29,11 @@
             android:id="@+id/feed"
             android:icon="@drawable/ic_baseline_dynamic_feed_24"
             android:title="feed" />
+
+        <item
+            android:id="@+id/action_logout"
+            android:icon="@drawable/ic_baseline_follow_the_signs_24"
+            android:title="feed" />
     </group>
 
     <item android:title="Communicate">
