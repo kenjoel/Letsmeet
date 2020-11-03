@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.kenjoel.letsmeet.adapters.sliderAdapter;
 import com.kenjoel.letsmeet.fragments.Login;
 import com.kenjoel.letsmeet.fragments.signup;
 
@@ -18,12 +19,21 @@ public class introActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
 
+    private sliderAdapter mSliderAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
 
         viewPager = findViewById(R.id.viewPager);
+
+        mSliderAdapter = new sliderAdapter(this);
+
+        viewPager.setAdapter(mSliderAdapter);
+
+
+
 
 
     }
