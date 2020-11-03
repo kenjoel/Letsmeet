@@ -25,7 +25,8 @@
         <FrameLayout
             android:id="@+id/frameNav"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@drawable/justin" />
     </LinearLayout>
 
 
@@ -59,6 +60,7 @@
                 tools:text="Hello" />
 
         </FrameLayout>
+
 
     </androidx.cardview.widget.CardView>
 

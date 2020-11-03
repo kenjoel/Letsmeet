@@ -25,8 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kenjoel.letsmeet.R;
 import com.kenjoel.letsmeet.authentication.LoginActivity;
-import com.kenjoel.letsmeet.friends.FriendsActivity;
-import com.kenjoel.letsmeet.settings.SettingsActivity;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -55,9 +53,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
         ButterKnife.bind(this);
-        navigationView.setSelectedItemId(R.id.profile);
-        navigationView.setOnNavigationItemSelectedListener(navListener);
-
         UsersInfo = FirebaseDatabase.getInstance().getReference().child("Users");
         numberProfile = profileNumber;
         nameProfile = mUsername;
@@ -100,37 +95,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
     }
-
-
-    BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()){
-//                case R.id.feed:
-//                    Intent intent = new Intent(ProfileActivity.this, FeedActivity.class);
-//                    startActivity(intent);
-//                    break;
-
-                case R.id.friends:
-                    Intent fintent = new Intent(ProfileActivity.this, FriendsActivity.class);
-                    startActivity(fintent);
-                    break;
-                case R.id.settings:
-                    Intent sintent = new Intent(ProfileActivity.this, SettingsActivity.class);
-                    startActivity(sintent);
-                    finish();
-                    break;
-
-//                case R.id.messages:
-//                    selectedFragment = new message_fragment();
-//                    break;
-            }
-
-            return true;
-        }
-
-
-    };
 
 
     @Override
