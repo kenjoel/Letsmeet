@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ import butterknife.ButterKnife;
 
 public class settingsFragment extends Fragment {
 
+    private static final String TAG = "food";
     private EditText nameProfile, phoneProfile;
     private Button mConfirmButton, mBackButton;
 
@@ -65,9 +67,6 @@ public class settingsFragment extends Fragment {
     @BindView(R.id.profilephone) EditText mPhone;
     @BindView(R.id.confirmBtn) Button mConfirmBtn;
     @BindView(R.id.backbtn) Button backBtn;
-    @BindView(R.id.bottom_navigation)
-    BottomNavigationView navigationView;
-
 
     public settingsFragment() {
         // Required empty public constructor
@@ -84,7 +83,7 @@ public class settingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
-
+        Log.i(TAG, userId);
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
         getUserInfo();
     }
@@ -94,14 +93,12 @@ public class settingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, v);
-
+        // Inflate the layout for this fragment
         nameProfile = getNameProfile;
         phoneProfile = mPhone;
         profileImage = imageView;
         mConfirmButton = mConfirmBtn;
         mBackButton = backBtn;
-        // Inflate the layout for this fragment
-
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +111,7 @@ public class settingsFragment extends Fragment {
             public void onClick(View v) {
             }
         });
+
         return v;
     }
 
@@ -127,6 +125,7 @@ public class settingsFragment extends Fragment {
                     if(map.get("name") != null){
                         name = map.get("name").toString();
                         nameProfile.setText(name);
+                        Log.i(TAG, name);
                     }
                     if(map.get("phone") != null){
                         phone = map.get("phone").toString();
