@@ -6,10 +6,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <fragment
-        android:id="@+id/feedFragment"
-        android:name="com.kenjoel.letsmeet.fragments.feedFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_feed"/>
+<!--    <fragment-->
+<!--        class="com.kenjoel.letsmeet.fragments.feedFragment"-->
+<!--        android:id="@+id/feedFragment"-->
+<!--        android:name="com.kenjoel.letsmeet.fragments.feedFragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        tools:layout="@layout/fragment_feed"/>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

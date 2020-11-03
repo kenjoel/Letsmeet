@@ -25,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kenjoel.letsmeet.R;
 import com.kenjoel.letsmeet.authentication.LoginActivity;
-import com.kenjoel.letsmeet.feed.FeedActivity;
 import com.kenjoel.letsmeet.friends.FriendsActivity;
 import com.kenjoel.letsmeet.settings.SettingsActivity;
 import com.squareup.picasso.Picasso;
@@ -107,10 +106,10 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()){
-                case R.id.feed:
-                    Intent intent = new Intent(ProfileActivity.this, FeedActivity.class);
-                    startActivity(intent);
-                    break;
+//                case R.id.feed:
+//                    Intent intent = new Intent(ProfileActivity.this, FeedActivity.class);
+//                    startActivity(intent);
+//                    break;
 
                 case R.id.friends:
                     Intent fintent = new Intent(ProfileActivity.this, FriendsActivity.class);

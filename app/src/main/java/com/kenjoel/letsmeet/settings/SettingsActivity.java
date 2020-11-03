@@ -32,7 +32,6 @@ import com.google.firebase.storage.UploadTask;
 import com.kenjoel.letsmeet.friends.FriendsActivity;
 import com.kenjoel.letsmeet.profile.ProfileActivity;
 import com.kenjoel.letsmeet.R;
-import com.kenjoel.letsmeet.feed.FeedActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -168,11 +167,11 @@ public class SettingsActivity extends AppCompatActivity {
 //                case R.id.messages:
 //                    selectedFragment = new message_fragment();
 //                    break;
-                case R.id.feed:
-                    Intent intent1 = new Intent(SettingsActivity.this, FeedActivity.class);
-                    startActivity(intent1);
-                    finish();
-                    break;
+//                case R.id.feed:
+//                    Intent intent1 = new Intent(SettingsActivity.this, FeedActivity.class);
+//                    startActivity(intent1);
+//                    finish();
+//                    break;
             }
             return true;
         }

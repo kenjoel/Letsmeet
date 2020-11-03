@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,12 +23,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kenjoel.letsmeet.R;
 import com.kenjoel.letsmeet.adapters.CardsAdapter;
-import com.kenjoel.letsmeet.feed.FeedActivity;
 import com.kenjoel.letsmeet.models.cards;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class feedFragment extends Fragment {
@@ -44,6 +47,8 @@ public class feedFragment extends Fragment {
     private static String userSex;
     private String oppositeSex;
     private Object data;
+    private FrameLayout frame;
+    SwipeFlingAdapterView flingContainer;
 
 
 
@@ -66,22 +71,27 @@ public class feedFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Users = FirebaseDatabase.getInstance().getReference().child("Users");
         getGender();
-
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getUid();
-
-        rowItems = new ArrayList<>();
-        arrayAdapter = new CardsAdapter(getActivity(), R.layout.item, rowItems);
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.fragment_feed, container, false);;
 
-        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView)  getView().findViewById(R.id.frame);
+//        ButterKnife.bind(this, view);
+        rowItems = new ArrayList<>();
+        arrayAdapter = new CardsAdapter(getActivity(), R.layout.item, rowItems);
+        routeB(view);
+
+        // Inflate the layout for this fragment
+        return view;
+    }
+
+    private void routeB(View v){
+        flingContainer = (SwipeFlingAdapterView) v.findViewById(R.id.frame);
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -123,9 +133,6 @@ public class feedFragment extends Fragment {
                 Toast.makeText(getActivity(), "clicked", Toast.LENGTH_SHORT).show();
             }
         });
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feed, container, false);
     }
 
     private void getGender() {

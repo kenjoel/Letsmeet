@@ -3,23 +3,30 @@ package com.kenjoel.letsmeet;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.Navigation;
 
+import com.google.android.material.navigation.NavigationView;
 import com.kenjoel.letsmeet.authentication.LoginActivity;
 import com.kenjoel.letsmeet.authentication.SignupActivity;
+import com.kenjoel.letsmeet.fragments.feedFragment;
+import com.kenjoel.letsmeet.fragments.profile_fragment;
+import com.kenjoel.letsmeet.profile.ProfileActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
 
 //    @BindView(R.id.creation) Button mCreateAccountButton;
@@ -37,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
 //        mCreateAccountButton.setOnClickListener(this);
 //        mLoginButtton.setOnClickListener(this);
     }
@@ -46,6 +56,21 @@ public class MainActivity extends AppCompatActivity {
         }else{
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.profile:
+               getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new profile_fragment()).commit();
+                break;
+            case R.id.feed:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new feedFragment()).commit();
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 //    @Override
