@@ -16,12 +16,14 @@ import java.util.ArrayList;
 
 public class introActivity extends AppCompatActivity {
 
-    private TextView mTextView;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+
+        viewPager = findViewById(R.id.viewPager);
 
 
     }
