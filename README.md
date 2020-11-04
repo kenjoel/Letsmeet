@@ -38,7 +38,8 @@
 
 
 ## Demo
-![](app/sampledata/sacrifice.png) ![](app/sampledata/suffice.png) ![](app/sampledata/seek.png)
+
+![](app/sampledata/seis.png) ![](app/sampledata/cinco.png) ![](app/sampledata/uno.png) ![](app/sampledata/dos.png) ![](app/sampledata/tres.png) ![](app/sampledata/quatro.png)
 
 ## BUGS
 
