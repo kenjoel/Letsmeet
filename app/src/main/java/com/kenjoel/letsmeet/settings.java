@@ -99,11 +99,9 @@ public class settings extends AppCompatActivity implements NavigationView.OnNavi
             @Override
             public void onClick(View v) {
                 saveUserInfo();
-                try {
-                    finalize();
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
+                Intent intent = new Intent(settings.this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
