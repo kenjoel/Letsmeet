@@ -17,8 +17,7 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,9 +34,6 @@ public class friendsFragment extends Fragment {
 
 
     private static final String TAG = "she got here successfully";
-    private DatabaseReference databaseReference;
-    private FirebaseUser mAuth;
-    private  String theUseId;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -60,11 +56,6 @@ public class friendsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null){
-            theUseId = getArguments().getString("userId");
-            Log.i(TAG, theUseId);
-        }
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
     }
 
     @Override
@@ -74,14 +65,14 @@ public class friendsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_friends, container, false);
         ButterKnife.bind(this, v);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
-        mRecyclerView.hasFixedSize();
+        mRecyclerView.setHasFixedSize(false);
         getUserInfo();
         return v;
     }
 
 
     private void getUserInfo() {
-        final DatabaseReference userDb = databaseReference.child(theUseId).child("connections");
+        final DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("Users");
         Log.d(TAG, userDb.toString());
 
         FirebaseRecyclerOptions<cardsObject> options = new FirebaseRecyclerOptions.Builder<cardsObject>()
@@ -151,7 +142,6 @@ public class friendsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        //updateUI(currentUser);
     }
 
 

@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
@@ -41,15 +40,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    private static String TAG = "And the user iiiss, drumroll";
+    private static final String TAG = "And the user iss, drumroll";
     private DrawerLayout drawerLayout;
+    private FirebaseAuth mAuth;
     private DatabaseReference UsersInfo;
 
+    final String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-    private String userId;
-
-
+    @BindView(R.id.imageViewCard)
+    ImageView imageView;
+    @BindView(R.id.name)
+    TextView mName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
-        userId =  FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.i(TAG, user);
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_app_bar_open_drawer_description, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -69,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
     public void onBackPressed(){
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -88,20 +88,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new feedFragment()).commit();
                 break;
             case R.id.settings:
-                Bundle bundle = new Bundle();
-                bundle.putString("userId", userId);
-                Fragment fragment = new settingsFragment();
-                fragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new settingsFragment()).commit();
-                break;
+                Intent intor = new Intent(MainActivity.this, settings.class);
+                startActivity(intor);
+                finish();
+                return true;
 
             case R.id.friends:
-                Bundle bun = new Bundle();
-                bun.putString("userId", userId);
-                Fragment frag = new friendsFragment();
-                frag.setArguments(bun);
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new friendsFragment()).commit();
-                break;
+                Intent intr = new Intent(MainActivity.this, friends.class);
+                startActivity(intr);
+                finish();
+                return true;
 
             case R.id.action_logout:
                 FirebaseAuth.getInstance().signOut();
@@ -109,6 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 finish();
                 return true;
+
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

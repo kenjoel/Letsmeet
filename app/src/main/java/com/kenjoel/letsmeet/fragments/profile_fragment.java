@@ -39,9 +39,6 @@ public class profile_fragment extends Fragment {
 
     @BindView(R.id.tv_name) TextView mUsername;
     @BindView(R.id.imageUser) ImageView mImageUser;
-    @BindView(R.id.profileEmail) TextView profileEmail;
-    @BindView(R.id.profileNumber) TextView profileNumber;
-    @BindView(R.id.profileGender) TextView profileGender;
 
 
     public profile_fragment() {
@@ -69,9 +66,7 @@ public class profile_fragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_profile_fragment, container, false);
         ButterKnife.bind(this, v);
-        numberProfile = profileNumber;
         nameProfile = mUsername;
-        genderProfile = profileGender;
         profileImage = mImageUser;
         getInfo();
         // Inflate the layout for this fragment
@@ -95,14 +90,11 @@ public class profile_fragment extends Fragment {
                 if(snapshot.child("name").exists()){
                     name = snapshot.child("name").getValue().toString();
                     userSex = snapshot.child("gender").getValue().toString();
-                    phone = snapshot.child("phone").getValue().toString();
                     profileImageUrl = snapshot.child("profileImageUrl").getValue().toString();
                 }else{
                     Toast.makeText(getActivity(), "No current user info", Toast.LENGTH_SHORT);
                 }
                 nameProfile.setText(name);
-                numberProfile.setText(phone);
-                genderProfile.setText(userSex);
                 Picasso.get().load(profileImageUrl).into(profileImage);
             }
 

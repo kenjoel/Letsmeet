@@ -48,7 +48,6 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.3.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
-
     def nav_version = "2.3.1"
     // Java language implementation
     implementation "androidx.navigation:navigation-fragment:$nav_version"

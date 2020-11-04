@@ -7,7 +7,7 @@
     android:background="@mipmap/ferenc"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".settings.SettingsActivity">
+    tools:context=".friends">
 
 
     <ImageView

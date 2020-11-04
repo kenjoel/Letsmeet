@@ -1,21 +1,23 @@
-package com.kenjoel.letsmeet.fragments;
+package com.kenjoel.letsmeet;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,7 +25,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,8 +35,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.kenjoel.letsmeet.R;
-import com.kenjoel.letsmeet.profile.ProfileActivity;
+import com.kenjoel.letsmeet.authentication.LoginActivity;
+import com.kenjoel.letsmeet.fragments.feedFragment;
+import com.kenjoel.letsmeet.fragments.profile_fragment;
+import com.kenjoel.letsmeet.fragments.settingsFragment;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -45,7 +49,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class settingsFragment extends Fragment {
+public class settings extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "food sharing, bla bla";
     private EditText nameProfile, phoneProfile;
@@ -60,32 +64,21 @@ public class settingsFragment extends Fragment {
     private String userSex;
     private Uri resultUri;
 
+    private DrawerLayout drawerLayout;
+
     @BindView(R.id.imageprofile) ImageView imageView;
     @BindView(R.id.nameprofile) EditText getNameProfile;
     @BindView(R.id.profilephone) EditText mPhone;
     @BindView(R.id.confirmBtn) Button mConfirmBtn;
     @BindView(R.id.backbtn) Button backBtn;
 
-    public settingsFragment() {
-        // Required empty public constructor
-    }
-
-    public static settingsFragment newInstance(String param1, String param2) {
-        settingsFragment fragment = new settingsFragment();
-        Bundle args = new Bundle();
-        return fragment;
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.activity_settings2);
+        ButterKnife.bind(this);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_settings, container, false);
-        ButterKnife.bind(this, v);
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
         // Inflate the layout for this fragment
@@ -117,14 +110,59 @@ public class settingsFragment extends Fragment {
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                fm.popBackStack();
+
             }
         });
+
         getUserInfo();
-        return v;
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_app_bar_open_drawer_description, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+    public void onBackPressed(){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else{
+            super.onBackPressed();
+        }
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.profile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new profile_fragment()).commit();
+                break;
+            case R.id.feed:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameNav, new feedFragment()).commit();
+                break;
+            case R.id.friends:
+                Intent intr = new Intent(settings.this, friends.class);
+                startActivity(intr);
+                finish();
+                return true;
+
+            case R.id.action_logout:
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(settings.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
     private void getUserInfo(){
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -179,7 +217,7 @@ public class settingsFragment extends Fragment {
             Bitmap bitmap = null;
 
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplication().getContentResolver(), resultUri);
+                bitmap = MediaStore.Images.Media.getBitmap(settings.this.getContentResolver(), resultUri);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -192,7 +230,7 @@ public class settingsFragment extends Fragment {
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(),"Failed to add image", Toast.LENGTH_LONG);
+                    Toast.makeText(settings.this,"Failed to add image", Toast.LENGTH_LONG);
                     return;
                 }
             });
@@ -208,8 +246,6 @@ public class settingsFragment extends Fragment {
                             Map userInfo = new HashMap();
                             userInfo.put("profileImageUrl", downloadUrl.toString());
                             mDatabaseReference.updateChildren(userInfo);
-                            FragmentManager fm = getActivity().getSupportFragmentManager();
-                            fm.popBackStack();
                         }
                     });
                 }
