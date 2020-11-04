@@ -39,10 +39,10 @@
 
 ## Demo
 <p>
- <img src="app/sampledata/uno.png" height="250px" />
-<img src="app/sampledata/quatro.png" height="250px"/>
-<img src="app/sampledata/cinco.png" height="250px"/>
-<img src="app/sampledata/tres.png" height="250px"/>
+ <img src="app/sampledata/uno.png" height="350px" />
+<img src="app/sampledata/quatro.png" height="350px"/>
+<img src="app/sampledata/cinco.png" height="350px"/>
+<img src="app/sampledata/tres.png" height="350px"/>
 
 </p>
 
