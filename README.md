@@ -39,9 +39,13 @@
 
 ## Demo
 
-| [![Welcome](app/sampledata/uno.png)]|[![Login](app/sampledata/quatro.png)]|[![Profile](app/sampledata/cinco.png)]|[![Math](app/sampledata/tres.png)]
-|:---:|:---:|:---:|
-| https://github.com/kenjoel | https://www.linkedin.com/in/ken-joel-muigai-002b22180 | kenmuigai980@gmail.com |
+<p>
+  <img src="app/sampledata/uno.png" height="190px"/>
+  <img src="app/sampledata/quatro.png" height="190px"/>
+  <img src="app/sampledata/cinco.png" height="190px"/>
+  <img src="app/sampledata/tres.png" height="190px"/>
+</p>
+
 
 ## BUGS
 
