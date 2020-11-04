@@ -39,7 +39,9 @@
 
 ## Demo
 
-![](app/sampledata/seis.png) ![](app/sampledata/cinco.png) ![](app/sampledata/uno.png) ![](app/sampledata/dos.png) ![](app/sampledata/tres.png) ![](app/sampledata/quatro.png)
+| [![Welcome](app/sampledata/uno.png)]|[![Login](app/sampledata/quatro.png)]|[![Profile](app/sampledata/cinco.png)]|[![Math](app/sampledata/tres.png)]
+|:---:|:---:|:---:|
+| https://github.com/kenjoel | https://www.linkedin.com/in/ken-joel-muigai-002b22180 | kenmuigai980@gmail.com |
 
 ## BUGS
 
